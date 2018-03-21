@@ -1,0 +1,641 @@
+{
+	"info": {
+		"_postman_id": "7855b3c4-c8e2-4633-ad62-ebc3424eb97f",
+		"name": "TSM API Test main",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Clients FIX Data",
+			"description": "",
+			"item": [
+				{
+					"name": "CREATE client FIX Data",
+					"description": "",
+					"item": [
+						{
+							"name": "POST CREATE NEW client FIX Data",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "a75e7e83-4aaf-4465-b4f6-bff27a9c6e33",
+										"type": "text/javascript",
+										"exec": [
+											"pm.test(\"Successful POST request\", function() {",
+											"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 202]);",
+											"});",
+											"",
+											"var jsonData = pm.response.json();",
+											"var client_id = jsonData.client.id",
+											"pm.environment.set(\"iteration_client_id\", client_id);",
+											"console.log(\"Iteration client id: \" + client_id);",
+											"",
+											"",
+											"pm.test(\"Verify client name: \" + jsonData.client.name, function() {",
+											"    pm.expect(jsonData.client.name).to.eql(pm.environment.get(\"name\"));",
+											"    console.log(\"JsonData current client name: \" + jsonData.client.name);",
+											"});",
+											"",
+											"pm.test(\"Verify client city: \" + jsonData.client.city, function() {",
+											"    pm.expect(jsonData.client.city).to.eql(pm.environment.get(\"city\"));",
+											"});",
+											"",
+											"pm.test(\"Verify client country: \" + jsonData.client.country, function() {",
+											"    pm.expect(jsonData.client.country).to.eql(pm.environment.get(\"country\"));",
+											"});",
+											"pm.test(\"Verify client state: \" + jsonData.client.state , function () {",
+											"    pm.expect(jsonData.client.state).to.eql(pm.environment.get(\"state\"));",
+											"});",
+											"pm.test(\"Verify client zip code: \" + jsonData.client.zip, function() {",
+											"    pm.expect(jsonData.client.zip).to.eql(pm.environment.get(\"zip\"));",
+											"});"
+										]
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "1ce8515a-5085-4caa-853d-f71bb51aa8a0",
+										"type": "text/javascript",
+										"exec": [
+											"var city = \"Austin5\";",
+											"var name = \"City of Austin5\";",
+											"var country = \"US\";",
+											"var state = \"TX\"",
+											"var zip = \"78748\";",
+											"pm.environment.set(\"city\", city);",
+											"pm.environment.set(\"name\", name);",
+											"pm.environment.set(\"country\", country);",
+											"pm.environment.set(\"state\", state);",
+											"pm.environment.set(\"zip\", zip);"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"client\": {\r\n    \"city\": \"{{city}}\",\r\n    \"country\": \"{{country}}\",\r\n    \"name\": \"{{name}}\",\r\n    \"state\": \"{{state}}\",\r\n    \"zip\": \"{{zip}}\"\r\n  }\r\n}"
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/rest/v1/clients?token={{token}}",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"rest",
+										"v1",
+										"clients"
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "{{token}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET VERIFY client info FIX Data",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "90f24d01-1e4e-42da-a854-1eaf3484a5e4",
+										"type": "text/javascript",
+										"exec": [
+											"pm.test(\"Successful GET request\", function () {",
+											"    pm.expect(pm.response.code).to.be.oneOf([200,201,202]);",
+											"});",
+											"",
+											"var jsonData = pm.response.json();",
+											"pm.test(\"Verify client id: \" + jsonData.client.id, function () {",
+											"    pm.expect(jsonData.client.id).to.eql(pm.environment.get(\"iteration_client_id\"));    ",
+											"    console.log(\"Iteration client id: \" + pm.environment.get(\"iteration_client_id\"));",
+											"    console.log(\"JsonData client id: \" + jsonData.client.id);",
+											"});",
+											"",
+											"pm.test(\"Verify client name: \" + jsonData.client.name, function () {",
+											"    pm.expect(jsonData.client.name).to.eql(pm.environment.get(\"name\"));",
+											"    console.log(\"JsonData current client name: \" + jsonData.client.name);",
+											"});",
+											"",
+											"pm.test(\"Verify client city: \"+ jsonData.client.city , function () {",
+											"    pm.expect(jsonData.client.city).to.eql(pm.environment.get(\"city\"));",
+											"});",
+											"",
+											"pm.test(\"Verify client country: \" + jsonData.client.country , function () {",
+											"    pm.expect(jsonData.client.country).to.eql(pm.environment.get(\"country\"));",
+											"});",
+											"pm.test(\"Verify client state: \" + jsonData.client.state , function () {",
+											"    pm.expect(jsonData.client.state).to.eql(pm.environment.get(\"state\"));",
+											"});",
+											"pm.test(\"Verify client zip: \" + jsonData.client.zip , function () {",
+											"    pm.expect(jsonData.client.zip).to.eql(pm.environment.get(\"zip\"));",
+											"});"
+										]
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "3d14173d-11ad-466a-a9de-4cfd9814d659",
+										"type": "text/javascript",
+										"exec": [
+											"",
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"client\": {\r\n    \"addressLine\": \"Brodie Ln\",\r\n    \"addressLine2\": \"Apt 628\",\r\n    \"city\": \"Austin\",\r\n    \"country\": \"USA\",\r\n    \"currency\": \"USD\",\r\n    \"email\": \"string\",\r\n    \"name\": \"New client 4\",\r\n    \"phone\": \"512-975-0001\",\r\n    \"preferredLanguage\": \"ENG\",\r\n    \"state\": \"TX\",\r\n    \"zip\": \"78745\"\r\n  }\r\n}"
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/rest/v1/clients/{{iteration_client_id}}?token={{token}}",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"rest",
+										"v1",
+										"clients",
+										"{{iteration_client_id}}"
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "{{token}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "6473e142-f3e3-4332-9136-db5b0eb8e669",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "0ee0a5ed-2f4d-4464-a705-ad553201d271",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "UPDATE client info FIX Data",
+					"description": "",
+					"item": [
+						{
+							"name": "PUT UPDATE NEW client FIX Data",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "2f54ec4d-4064-47f7-9845-4e2bf2dc224b",
+										"type": "text/javascript",
+										"exec": [
+											"pm.test(\"Successful GET request\", function () {",
+											"    pm.expect(pm.response.code).to.be.oneOf([200,201,202]);",
+											"});",
+											"",
+											"var jsonData = pm.response.json();",
+											"pm.test(\"Verify client id: \" + jsonData.client.id, function () {",
+											"    pm.expect(jsonData.client.id).to.eql(pm.environment.get(\"iteration_client_id\"));    ",
+											"    console.log(\"Iteration client id: \" + pm.environment.get(\"iteration_client_id\"));",
+											"    console.log(\"JsonData client id: \" + jsonData.client.id);",
+											"});",
+											"",
+											"pm.test(\"Verify client name: \" + jsonData.client.name, function () {",
+											"    pm.expect(jsonData.client.name).to.eql(pm.environment.get(\"name\"));",
+											"    console.log(\"JsonData current client name: \" + jsonData.client.name);",
+											"});",
+											"",
+											"pm.test(\"Verify client city: \"+ jsonData.client.city , function () {",
+											"    pm.expect(jsonData.client.city).to.eql(pm.environment.get(\"city\"));",
+											"});",
+											"",
+											"pm.test(\"Verify client country: \" + jsonData.client.country , function () {",
+											"    pm.expect(jsonData.client.country).to.eql(pm.environment.get(\"country\"));",
+											"});",
+											"pm.test(\"Verify client state: \" + jsonData.client.state , function () {",
+											"    pm.expect(jsonData.client.state).to.eql(pm.environment.get(\"state\"));",
+											"});",
+											"pm.test(\"Verify client zip: \" + jsonData.client.zip , function () {",
+											"    pm.expect(jsonData.client.zip).to.eql(pm.environment.get(\"zip\"));",
+											"});",
+											""
+										]
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "c36e2bd1-2cca-4342-8c2f-8c4a32c62bff",
+										"type": "text/javascript",
+										"exec": [
+											"var city = pm.environment.get(\"city\")+\"_updated\";",
+											"var name = pm.environment.get(\"name\")+\"_updated\";",
+											"var country = pm.environment.get(\"country\")+\"_updated\";",
+											"var zip = pm.environment.get(\"zip\")+\"_updated\";",
+											"var state = pm.environment.get(\"state\")+\"_updated\";",
+											"pm.environment.set(\"city\", city);",
+											"pm.environment.set(\"name\", name);",
+											"pm.environment.set(\"country\", country);",
+											"pm.environment.set(\"state\", state);",
+											"pm.environment.set(\"zip\", zip);"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"client\": {\r\n  \t\"id\": \"{{iteration_client_id}}\",\r\n  \t\"name\": \"{{name}}\",\r\n    \"city\": \"{{city}}\",\r\n    \"country\": \"{{country}}\",\r\n    \"state\": \"{{state}}\",\r\n    \"zip\": \"{{zip}}\"\r\n  }\r\n}"
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/rest/v1/clients/{{iteration_client_id}}?token={{token}}",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"rest",
+										"v1",
+										"clients",
+										"{{iteration_client_id}}"
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "{{token}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET VERIFY client info FIX Data",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "379521c1-dfe2-4d11-adaa-71157d565d0b",
+										"type": "text/javascript",
+										"exec": [
+											"pm.test(\"Successful GET request\", function () {",
+											"    pm.expect(pm.response.code).to.be.oneOf([200,201,202]);",
+											"});",
+											"",
+											"var jsonData = pm.response.json();",
+											"pm.test(\"Verify client id: \" + jsonData.client.id, function () {",
+											"    var iteration_client_id = pm.environment.get(\"iteration_client_id\");",
+											"    console.log(\"Iteration client id: \" + iteration_client_id);",
+											"    console.log(\"JsonData client id: \" + jsonData.client.id);",
+											"    pm.expect(jsonData.client.id).to.eql(iteration_client_id);    ",
+											"});",
+											"",
+											"pm.test(\"Verify client name: \" + jsonData.client.name, function () {",
+											"    pm.expect(jsonData.client.name).to.eql(pm.environment.get(\"name\"));",
+											"    console.log(\"JsonData current client name: \" + jsonData.client.name);",
+											"});",
+											"",
+											"pm.test(\"Verify client city: \"+ jsonData.client.city , function () {",
+											"    pm.expect(jsonData.client.city).to.eql(pm.environment.get(\"city\"));",
+											"});",
+											"",
+											"pm.test(\"Verify client country: \" + jsonData.client.country , function () {",
+											"    pm.expect(jsonData.client.country).to.eql(pm.environment.get(\"country\"));",
+											"});",
+											"pm.test(\"Verify client state: \" + jsonData.client.state , function () {",
+											"    pm.expect(jsonData.client.state).to.eql(pm.environment.get(\"state\"));",
+											"});",
+											"pm.test(\"Verify client zip: \" + jsonData.client.zip , function () {",
+											"    pm.expect(jsonData.client.zip).to.eql(pm.environment.get(\"zip\"));",
+											"});"
+										]
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "3d14173d-11ad-466a-a9de-4cfd9814d659",
+										"type": "text/javascript",
+										"exec": [
+											"",
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"client\": {\r\n    \"addressLine\": \"Brodie Ln\",\r\n    \"addressLine2\": \"Apt 628\",\r\n    \"city\": \"Austin\",\r\n    \"country\": \"USA\",\r\n    \"currency\": \"USD\",\r\n    \"email\": \"string\",\r\n    \"name\": \"New client 4\",\r\n    \"phone\": \"512-975-0001\",\r\n    \"preferredLanguage\": \"ENG\",\r\n    \"state\": \"TX\",\r\n    \"zip\": \"78745\"\r\n  }\r\n}"
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/rest/v1/clients/{{iteration_client_id}}?token={{token}}",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"rest",
+										"v1",
+										"clients",
+										"{{iteration_client_id}}"
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "{{token}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "7b98433a-5bc1-44ee-9788-a1f1221478a6",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "edaa2ecd-3817-43fb-97ef-82dc0508805c",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "DELETE client from list FIX Data",
+					"description": "",
+					"item": [
+						{
+							"name": "PUT SOFT REMOVE client FIX Data",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "7f470ab4-2005-4f79-8360-134260d3579b",
+										"type": "text/javascript",
+										"exec": [
+											"pm.test(\"Successful GET request\", function () {",
+											"    pm.expect(pm.response.code).to.be.oneOf([200,201,202]);",
+											"});",
+											"",
+											"var jsonData = pm.response.json();",
+											"pm.test(\"Verify client id: \" + jsonData.client.id, function () {",
+											"    var iteration_client_id = pm.environment.get(\"iteration_client_id\");",
+											"    console.log(\"Iteration client id: \" + iteration_client_id);",
+											"    console.log(\"JsonData client id: \" + jsonData.client.id);",
+											"    pm.expect(jsonData.client.id).to.eql(iteration_client_id);    ",
+											"});",
+											"",
+											"pm.test(\"Verify client name: \" + jsonData.client.name, function () {",
+											"    pm.expect(jsonData.client.name).to.eql(null);",
+											"    console.log(\"JsonData current client name: \" + jsonData.client.name);",
+											"});",
+											"",
+											"pm.test(\"Verify client city: \"+ jsonData.client.city , function () {",
+											"    pm.expect(jsonData.client.city).to.eql(null);",
+											"});",
+											"",
+											"pm.test(\"Verify client country: \" + jsonData.client.country , function () {",
+											"    pm.expect(jsonData.client.country).to.eql(null);",
+											"});",
+											"pm.test(\"Verify client state: \" + jsonData.client.state , function () {",
+											"    pm.expect(jsonData.client.state).to.eql(null);",
+											"});",
+											"pm.test(\"Verify client zip: \" + jsonData.client.zip , function () {",
+											"    pm.expect(jsonData.client.zip).to.eql(null);",
+											"});"
+										]
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "4f0fba7c-ad10-4f9f-aee6-2147d0701428",
+										"type": "text/javascript",
+										"exec": [
+											"pm.environment.unset(\"city\");",
+											"pm.environment.unset(\"name\");",
+											"pm.environment.unset(\"country\");",
+											"pm.environment.unset(\"state\");",
+											"pm.environment.unset(\"zip\");"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"client\": {\r\n  \t\"id\": \"{{iteration_client_id}}\",\r\n    \"deleted\": \"true\"\r\n  }\r\n}"
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/rest/v1/clients/{{iteration_client_id}}?token={{token}}",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"rest",
+										"v1",
+										"clients",
+										"{{iteration_client_id}}"
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "{{token}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET VERIFY client info FIX Data",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "e7100a0f-88b8-4ccd-83b3-9698248b56eb",
+										"type": "text/javascript",
+										"exec": [
+											"pm.test(\"Successful GET request\", function () {",
+											"    pm.expect(pm.response.code).to.be.oneOf([200,201,202]);",
+											"});",
+											"",
+											"var jsonData = pm.response.json();",
+											"pm.test(\"Verify client id: \" + jsonData.client.id, function () {",
+											"    var iteration_client_id = pm.environment.get(\"iteration_client_id\");",
+											"    console.log(\"Iteration client id: \" + iteration_client_id);",
+											"    console.log(\"JsonData client id: \" + jsonData.client.id);",
+											"    pm.expect(jsonData.client.id).to.eql(iteration_client_id);    ",
+											"});",
+											"",
+											"pm.test(\"Verify client name: \" + jsonData.client.name, function () {",
+											"    pm.expect(jsonData.client.name).to.eql(null);",
+											"    console.log(\"JsonData current client name: \" + jsonData.client.name);",
+											"});",
+											"",
+											"pm.test(\"Verify client city: \"+ jsonData.client.city , function () {",
+											"    pm.expect(jsonData.client.city).to.eql(null);",
+											"});",
+											"",
+											"pm.test(\"Verify client country: \" + jsonData.client.country , function () {",
+											"    pm.expect(jsonData.client.country).to.eql(null);",
+											"});",
+											"pm.test(\"Verify client state: \" + jsonData.client.state , function () {",
+											"    pm.expect(jsonData.client.state).to.eql(null);",
+											"});",
+											"pm.test(\"Verify client zip: \" + jsonData.client.zip , function () {",
+											"    pm.expect(jsonData.client.zip).to.eql(null);",
+											"});"
+										]
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "3d14173d-11ad-466a-a9de-4cfd9814d659",
+										"type": "text/javascript",
+										"exec": [
+											"",
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"client\": {\r\n    \"addressLine\": \"Brodie Ln\",\r\n    \"addressLine2\": \"Apt 628\",\r\n    \"city\": \"Austin\",\r\n    \"country\": \"USA\",\r\n    \"currency\": \"USD\",\r\n    \"email\": \"string\",\r\n    \"name\": \"New client 4\",\r\n    \"phone\": \"512-975-0001\",\r\n    \"preferredLanguage\": \"ENG\",\r\n    \"state\": \"TX\",\r\n    \"zip\": \"78745\"\r\n  }\r\n}"
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/rest/v1/clients/{{iteration_client_id}}?token={{token}}",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"rest",
+										"v1",
+										"clients",
+										"{{iteration_client_id}}"
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "{{token}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				}
+			]
+		}
+	]
+}
