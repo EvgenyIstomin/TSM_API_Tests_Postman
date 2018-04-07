@@ -19,7 +19,7 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "323b87c7-18cb-419c-8902-fac6a864fcb5",
+										"id": "52aac988-a5c5-4d0c-b9b0-f4c991051be4",
 										"type": "text/javascript",
 										"exec": [
 											"pm.test(\"Successful GET request\", function () {",
@@ -61,7 +61,7 @@
 											"pm.environment.set(\"id\", jsonData.client.id);",
 											"console.log(\"Iteration client id: \" + jsonData.client.id);",
 											"",
-											"//Проверяем соответствие свойств клиента сохраненных в переменных окружения с полученными от сервера",
+											"//Проверяем свойства клиента сохраненные в переменных окружения с полученными от сервера",
 											"for (var i=0; i < client_titles.length; i++)",
 											"    {",
 											"    console.log(\"iteration# \"+i);",
@@ -139,7 +139,7 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "68154300-0e23-4e1f-ac80-a8b4d66e1175",
+										"id": "e7a23865-3ae5-4438-97fb-9ca39757e4f7",
 										"type": "text/javascript",
 										"exec": [
 											"pm.test(\"Successful GET request\", function () {",
@@ -178,7 +178,7 @@
 											"//Парсим Json файл",
 											"var jsonData = pm.response.json();",
 											"",
-											"//Проверяем соответствие свойств клиента сохраненных в переменных окружения с полученными от сервера",
+											"//Проверяем свойства клиента сохраненные в переменных окружения с полученными от сервера",
 											"for (var i=0; i < client_titles.length; i++)",
 											"    {",
 											"    console.log(\"iteration# \"+i);",
@@ -278,7 +278,7 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "ae6d4aa5-f783-41d1-8d4c-4a566f9de067",
+										"id": "2a80d9c2-1815-4d7d-a081-626ce17a5797",
 										"type": "text/javascript",
 										"exec": [
 											"pm.test(\"Successful GET request\", function () {",
@@ -317,7 +317,7 @@
 											"//Парсим Json файл",
 											"var jsonData = pm.response.json();",
 											"",
-											"//Проверяем соответствие свойств клиента сохраненных в переменных окружения с полученными от сервера",
+											"//Проверяем свойства клиента сохраненные в переменных окружения с полученными от сервера",
 											"for (var i=0; i < client_titles.length; i++)",
 											"    {",
 											"    console.log(\"iteration# \"+i);",
@@ -395,7 +395,7 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "771f92a0-2d9f-42fe-853d-e389a2ba540f",
+										"id": "b8be3ef5-0785-49d9-ac0d-4e3db1716863",
 										"type": "text/javascript",
 										"exec": [
 											"pm.test(\"Successful GET request\", function () {",
@@ -434,7 +434,7 @@
 											"//Парсим Json файл",
 											"var jsonData = pm.response.json();",
 											"",
-											"//Проверяем соответствие свойств клиента сохраненных в переменных окружения с полученными от сервера",
+											"//Проверяем свойства клиента сохраненные в переменных окружения с полученными от сервера",
 											"for (var i=0; i < client_titles.length; i++)",
 											"    {",
 											"    console.log(\"iteration# \"+i);",
@@ -644,7 +644,7 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "fa55a974-ab13-4226-86fd-612c8b6ea152",
+										"id": "5eda20d1-bd6d-4963-8adf-dec5f24be3a6",
 										"type": "text/javascript",
 										"exec": [
 											"pm.test(\"Successful GET request\", function () {",
@@ -682,7 +682,7 @@
 											"//Парсим Json файл",
 											"var jsonData = pm.response.json();",
 											"",
-											"//Проверяем соответствие свойств клиента сохраненных в переменных окружения с полученными от сервера",
+											"//Проверяем соответствие свойств клиента полученныx от сервера с null ",
 											"for (var i=0; i < client_titles.length; i++)",
 											"    {",
 											"    console.log(\"iteration# \"+i);",
@@ -749,6 +749,2439 @@
 						}
 					],
 					"_postman_isSubFolder": true
+				}
+			]
+		},
+		{
+			"name": "modul Clients, feeds from CVS data file, all client fields required",
+			"description": "Проверка создания, обновления и \"soft remove\" клиента. Загрузка данных из CVS файла. Все поля данных клиента обязательные для заполнения.",
+			"item": [
+				{
+					"name": "Successful CREATE new client, CVS data file, all fields required",
+					"description": "",
+					"item": [
+						{
+							"name": "Successful CREATE new client, CVS data file, all fields required",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "96d76c92-12aa-48bd-a329-6c4639d7f0e1",
+										"type": "text/javascript",
+										"exec": [
+											"//Парсим Json файл",
+											"var jsonData = pm.response.json();",
+											"",
+											"//Сохраняем id созданого клиента для передачи этого значения в следующие тесты",
+											"pm.environment.set(\"id\", jsonData.client.id);",
+											"console.log(\"Iteration client id: \" + jsonData.client.id);",
+											"",
+											"// выполняем тест если запрос успешен && корректное id && клиент с астивным статусом (\"deleted\": false)",
+											"if (pm.response.to.have.status(200)&&",
+											"    pm.expect(jsonData.client.id).to.eql(pm.environment.get(\"id\"))&&",
+											"    pm.expect(jsonData.client.deleted).to.eql(false))",
+											"    {",
+											"        ",
+											"     //Проверяем свойства клиента из data файла с полученными от сервера",
+											"                ",
+											"    // проверяемые в цикле свойства клиента",
+											"    var clientTitles = [",
+											"    \"addressLine\",",
+											"    \"addressLine2\",",
+											"    \"bankAccount\",",
+											"    \"bankName\",",
+											"    \"city\",",
+											"    \"country\",",
+											"    \"currency\",",
+											"    \"email\",",
+											"    \"email2\",",
+											"    \"fax\",",
+											"    \"legalName\",",
+											"    \"name\",",
+											"    \"note\",",
+											"    \"paymentType\",",
+											"    \"phone\",",
+											"    \"phone2\",",
+											"    \"preferredLanguage\",",
+											"    \"state\",",
+											"    \"tax\",",
+											"    \"tin\",",
+											"    \"zip\"",
+											"    ];",
+											"    console.log(\"clientTitles length: \" + clientTitles.length);",
+											"                ",
+											"    //Проверяем свойства клиента из data файла с полученными от сервера",
+											"    for (var i=0; i < clientTitles.length; i++) {",
+											"        //выводим на консоль: ",
+											"        // номер итерации цикла",
+											"        console.log(\"iteration# \"+i);",
+											"        //проверяемый параметр",
+											"        console.log(\"client_title: \"+clientTitles[i]);",
+											"                ",
+											"        // Определяем и выводим значения параметра из Json и data файла",
+											"        var jsonClientTitleValue = String(jsonData.client[clientTitles[i]]);",
+											"        var dataClientTitleValue = String(data[clientTitles[i]]);",
+											"        console.log(\"Json!\" + jsonClientTitleValue + \"!\" + dataClientTitleValue + \"!Data\");",
+											"                ",
+											"        // Тест на проверку соответствия параметра из Json и Data файла",
+											"        pm.test(\"Verify client \"+ clientTitles[i] +\": \" + jsonClientTitleValue, function () {",
+											"        pm.expect(jsonClientTitleValue).to.equal(dataClientTitleValue);",
+											"        });",
+											"    }",
+											"}"
+										]
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "15f74bc1-0fe6-483e-b852-d02143ad0d57",
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"client\": {\r\n\t\"addressLine\": \"{{addressLine}}\",\r\n    \"addressLine2\": \"{{addressLine2}}\",\r\n    \"bankAccount\": \"{{bankAccount}}\",\r\n    \"bankName\": \"{{bankName}}\",\r\n    \"city\": \"{{city}}\",\r\n    \"country\": \"{{country}}\",\r\n    \"currency\": \"{{currency}}\",\r\n    \"email\": \"{{email}}\",\r\n    \"email2\": \"{{email2}}\",\r\n    \"fax\": \"{{fax}}\",\r\n    \"legalName\": \"{{legalName}}\",\r\n    \"name\": \"{{name}}\",\r\n    \"note\": \"{{note}}\",\r\n    \"phone\": \"{{phone}}\",\r\n    \"phone2\": \"{{phone2}}\",\r\n    \"preferredLanguage\": \"{{preferredLanguage}}\",\r\n    \"state\": \"{{state}}\",\r\n    \"tax\": \"{{tax}}\",\r\n    \"tin\": \"{{tin}}\",\r\n    \"zip\": \"{{zip}}\",\r\n   \"paymentType\": \"{{paymentType}}\"\r\n  }\r\n}"
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/rest/v1/clients?token={{token}}",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"rest",
+										"v1",
+										"clients"
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "{{token}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Successful VERIFY new client, CVS data file, all fields required",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "8202062d-0b2e-4a6b-b811-86b2240af053",
+										"type": "text/javascript",
+										"exec": [
+											"//Парсим Json файл",
+											"var jsonData = pm.response.json();",
+											"",
+											"//Проверяем id клиента coхраненное в переменной с полученным от сервера",
+											"pm.test(\"Verify client id \" + jsonData.client.id, function () ",
+											"{pm.expect(jsonData.client.id).to.eql(pm.environment.get(\"id\"));",
+											"console.log(\"Iteration client id: \" + jsonData.client.id);",
+											"});",
+											"",
+											"// выполняем тест если запрос успешен && корректное id && клиент с астивным статусом (\"deleted\": false)",
+											"if (pm.response.to.have.status(200)&&",
+											"    pm.expect(jsonData.client.id).to.eql(pm.environment.get(\"id\"))&&",
+											"    pm.expect(jsonData.client.deleted).to.eql(false))",
+											"    {",
+											"        ",
+											"     //Проверяем свойства клиента из data файла с полученными от сервера",
+											"                ",
+											"    // проверяемые в цикле свойства клиента",
+											"    var clientTitles = [",
+											"    \"addressLine\",",
+											"    \"addressLine2\",",
+											"    \"bankAccount\",",
+											"    \"bankName\",",
+											"    \"city\",",
+											"    \"country\",",
+											"    \"currency\",",
+											"    \"email\",",
+											"    \"email2\",",
+											"    \"fax\",",
+											"    \"legalName\",",
+											"    \"name\",",
+											"    \"note\",",
+											"    \"paymentType\",",
+											"    \"phone\",",
+											"    \"phone2\",",
+											"    \"preferredLanguage\",",
+											"    \"state\",",
+											"    \"tax\",",
+											"    \"tin\",",
+											"    \"zip\"",
+											"    ];",
+											"    console.log(\"clientTitles length: \" + clientTitles.length);",
+											"                ",
+											"    //Проверяем свойства клиента из data файла с полученными от сервера",
+											"    for (var i=0; i < clientTitles.length; i++) {",
+											"        //выводим на консоль: ",
+											"        // номер итерации цикла",
+											"        console.log(\"iteration# \"+i);",
+											"        //проверяемый параметр",
+											"        console.log(\"client_title: \"+clientTitles[i]);",
+											"                ",
+											"        // Определяем и выводим значения параметра из Json и data файла",
+											"        var jsonClientTitleValue = String(jsonData.client[clientTitles[i]]);",
+											"        var dataClientTitleValue = String(data[clientTitles[i]]);",
+											"        console.log(\"Json!\" + jsonClientTitleValue + \"!\" + dataClientTitleValue + \"!Data\");",
+											"                ",
+											"        // Тест на проверку соответствия параметра из Json и Data файла",
+											"        pm.test(\"Verify client \"+ clientTitles[i] +\": \" + jsonClientTitleValue, function () {",
+											"        pm.expect(jsonClientTitleValue).to.equal(dataClientTitleValue);",
+											"        });",
+											"    }",
+											"}"
+										]
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "3d14173d-11ad-466a-a9de-4cfd9814d659",
+										"type": "text/javascript",
+										"exec": [
+											"",
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"client\": {\r\n    \"addressLine\": \"Brodie Ln\",\r\n    \"addressLine2\": \"Apt 628\",\r\n    \"city\": \"Austin\",\r\n    \"country\": \"USA\",\r\n    \"currency\": \"USD\",\r\n    \"email\": \"string\",\r\n    \"name\": \"New client 4\",\r\n    \"phone\": \"512-975-0001\",\r\n    \"preferredLanguage\": \"ENG\",\r\n    \"state\": \"TX\",\r\n    \"zip\": \"78745\"\r\n  }\r\n}"
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/rest/v1/clients/{{id}}?token={{token}}",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"rest",
+										"v1",
+										"clients",
+										"{{id}}"
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "{{token}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "6473e142-f3e3-4332-9136-db5b0eb8e669",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "0ee0a5ed-2f4d-4464-a705-ad553201d271",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Successful UPDATE client, CVS data file, all fields required",
+					"description": "",
+					"item": [
+						{
+							"name": "Successful CREATE new client, CVS data file, all fields required",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "96d76c92-12aa-48bd-a329-6c4639d7f0e1",
+										"type": "text/javascript",
+										"exec": [
+											"//Парсим Json файл",
+											"var jsonData = pm.response.json();",
+											"",
+											"//Сохраняем id созданого клиента для передачи этого значения в следующие тесты",
+											"pm.environment.set(\"id\", jsonData.client.id);",
+											"console.log(\"Iteration client id: \" + jsonData.client.id);",
+											"",
+											"// выполняем тест если запрос успешен && корректное id && клиент с астивным статусом (\"deleted\": false)",
+											"if (pm.response.to.have.status(200)&&",
+											"    pm.expect(jsonData.client.id).to.eql(pm.environment.get(\"id\"))&&",
+											"    pm.expect(jsonData.client.deleted).to.eql(false))",
+											"    {",
+											"        ",
+											"     //Проверяем свойства клиента из data файла с полученными от сервера",
+											"                ",
+											"    // проверяемые в цикле свойства клиента",
+											"    var clientTitles = [",
+											"    \"addressLine\",",
+											"    \"addressLine2\",",
+											"    \"bankAccount\",",
+											"    \"bankName\",",
+											"    \"city\",",
+											"    \"country\",",
+											"    \"currency\",",
+											"    \"email\",",
+											"    \"email2\",",
+											"    \"fax\",",
+											"    \"legalName\",",
+											"    \"name\",",
+											"    \"note\",",
+											"    \"paymentType\",",
+											"    \"phone\",",
+											"    \"phone2\",",
+											"    \"preferredLanguage\",",
+											"    \"state\",",
+											"    \"tax\",",
+											"    \"tin\",",
+											"    \"zip\"",
+											"    ];",
+											"    console.log(\"clientTitles length: \" + clientTitles.length);",
+											"                ",
+											"    //Проверяем свойства клиента из data файла с полученными от сервера",
+											"    for (var i=0; i < clientTitles.length; i++) {",
+											"        //выводим на консоль: ",
+											"        // номер итерации цикла",
+											"        console.log(\"iteration# \"+i);",
+											"        //проверяемый параметр",
+											"        console.log(\"client_title: \"+clientTitles[i]);",
+											"                ",
+											"        // Определяем и выводим значения параметра из Json и data файла",
+											"        var jsonClientTitleValue = String(jsonData.client[clientTitles[i]]);",
+											"        var dataClientTitleValue = String(data[clientTitles[i]]);",
+											"        console.log(\"Json!\" + jsonClientTitleValue + \"!\" + dataClientTitleValue + \"!Data\");",
+											"                ",
+											"        // Тест на проверку соответствия параметра из Json и Data файла",
+											"        pm.test(\"Verify client \"+ clientTitles[i] +\": \" + jsonClientTitleValue, function () {",
+											"        pm.expect(jsonClientTitleValue).to.equal(dataClientTitleValue);",
+											"        });",
+											"    }",
+											"}"
+										]
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "15f74bc1-0fe6-483e-b852-d02143ad0d57",
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"client\": {\r\n\t\"addressLine\": \"{{addressLine}}\",\r\n    \"addressLine2\": \"{{addressLine2}}\",\r\n    \"bankAccount\": \"{{bankAccount}}\",\r\n    \"bankName\": \"{{bankName}}\",\r\n    \"city\": \"{{city}}\",\r\n    \"country\": \"{{country}}\",\r\n    \"currency\": \"{{currency}}\",\r\n    \"email\": \"{{email}}\",\r\n    \"email2\": \"{{email2}}\",\r\n    \"fax\": \"{{fax}}\",\r\n    \"legalName\": \"{{legalName}}\",\r\n    \"name\": \"{{name}}\",\r\n    \"note\": \"{{note}}\",\r\n    \"phone\": \"{{phone}}\",\r\n    \"phone2\": \"{{phone2}}\",\r\n    \"preferredLanguage\": \"{{preferredLanguage}}\",\r\n    \"state\": \"{{state}}\",\r\n    \"tax\": \"{{tax}}\",\r\n    \"tin\": \"{{tin}}\",\r\n    \"zip\": \"{{zip}}\",\r\n   \"paymentType\": \"{{paymentType}}\"\r\n  }\r\n}"
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/rest/v1/clients?token={{token}}",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"rest",
+										"v1",
+										"clients"
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "{{token}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Successful UPDATE client, CVS data file, all fields required",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "66c71d50-8cdb-4224-888f-70caf11f79b6",
+										"type": "text/javascript",
+										"exec": [
+											"//Парсим Json файл",
+											"var jsonData = pm.response.json();",
+											"",
+											"//Проверяем id клиента coхраненное в переменной с полученным от сервера",
+											"pm.test(\"Verify client id \" + jsonData.client.id, function () ",
+											"{pm.expect(jsonData.client.id).to.eql(pm.environment.get(\"id\"));",
+											"console.log(\"Iteration client id: \" + jsonData.client.id);",
+											"});",
+											"",
+											"// выполняем тест если запрос успешен && корректное id && клиент с астивным статусом (\"deleted\": false)",
+											"if (pm.response.to.have.status(200)&&",
+											"    pm.expect(jsonData.client.id).to.eql(pm.environment.get(\"id\"))&&",
+											"    pm.expect(jsonData.client.deleted).to.eql(false))",
+											"    {",
+											"        ",
+											"     //Проверяем свойства клиента из data файла с полученными от сервера",
+											"                ",
+											"    // проверяемые в цикле свойства клиента",
+											"    var clientTitles = [",
+											"    \"addressLine\",",
+											"    \"addressLine2\",",
+											"    \"bankAccount\",",
+											"    \"bankName\",",
+											"    \"city\",",
+											"    \"country\",",
+											"    \"currency\",",
+											"    \"email\",",
+											"    \"email2\",",
+											"    \"fax\",",
+											"    \"legalName\",",
+											"    \"name\",",
+											"    \"note\",",
+											"    \"paymentType\",",
+											"    \"phone\",",
+											"    \"phone2\",",
+											"    \"preferredLanguage\",",
+											"    \"state\",",
+											"    \"tax\",",
+											"    \"tin\",",
+											"    \"zip\"",
+											"    ];",
+											"    console.log(\"clientTitles length: \" + clientTitles.length);",
+											"    ",
+											"    //Проверяем свойства клиента из data файла с полученными от сервера",
+											"    for (var i=0; i < clientTitles.length; i++) {",
+											"        //выводим на консоль: ",
+											"        // номер итерации цикла",
+											"        console.log(\"iteration# \"+i);",
+											"        //проверяемый параметр",
+											"        console.log(\"client_title: \"+clientTitles[i]);",
+											"                ",
+											"        // Определяем и выводим значения параметра из Json и data файла",
+											"        var clientTitleUpd=clientTitles[i]+\"Upd\";",
+											"        var jsonClientTitleValue = String(jsonData.client[clientTitles[i]]);",
+											"        var dataClientTitleValue = String(pm.environment.get(clientTitleUpd));",
+											"        console.log(\"Json!\" + jsonClientTitleValue + \"!\" + dataClientTitleValue + \"!Data\");",
+											"                ",
+											"        // Тест на проверку соответствия параметра из Json и Data файла",
+											"        pm.test(\"Verify client \"+ clientTitles[i] +\": \" + jsonClientTitleValue, function () {",
+											"        pm.expect(jsonClientTitleValue).to.equal(dataClientTitleValue);",
+											"        });",
+											"    }",
+											"}"
+										]
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "edf145c7-e578-4b4c-a97d-90f9852fc1db",
+										"type": "text/javascript",
+										"exec": [
+											"var clientTitles = [",
+											"\"addressLine\",",
+											"\"addressLine2\",",
+											"\"bankAccount\",",
+											"\"bankName\",",
+											"\"city\",",
+											"\"country\",",
+											"\"currency\",",
+											"\"email\",",
+											"\"email2\",",
+											"\"fax\",",
+											"\"legalName\",",
+											"\"name\",",
+											"\"note\",",
+											"\"paymentType\",",
+											"\"phone\",",
+											"\"phone2\",",
+											"\"preferredLanguage\",",
+											"\"state\",",
+											"\"tax\",",
+											"\"tin\",",
+											"\"zip\"",
+											"];",
+											"",
+											"for (var i=0; i < clientTitles.length; i++) {",
+											"    var clientTitleUpd = clientTitles[i]+\"Upd\";",
+											"    switch (clientTitleUpd) {",
+											"        case \"currencyUpd\":",
+											"            var currencyArray= [\"PLN\",\"USD\",\"EUR\",\"RUB\"];",
+											"            var clientTitleUpdValue = currencyArray[Math.floor(Math.random() * currencyArray.length)];",
+											"            break;",
+											"        case \"zipUpd\":",
+											"            var clientTitleUpdValue =  timeStamp;",
+											"            break;",
+											"        case \"taxUpd\":",
+											"            var clientTitleUpdValue =  timeStamp;",
+											"            break;",
+											"        case \"preferredLanguageUpd\":",
+											"            var  langArray = [\"DEU\",\"IND\",\"LIT\",\"HRV\",\"LAV\",\"ARA\",\"UKR\",\"HUN\",\"VIE\",\"SLV\",\"MLT\",\"HIN\",\"AUT\",\"BOS\",\"ISL\",\"ITA\",\"THA\",\"HEB\",\"NOR\",\"RON\",\"POR\",\"AZE\",\"ENG\",\"NLD\",\"GLE\",\"BUL\",\"KAZ\",\"ZHO\",\"HYE\",\"FRA\",\"BEL\",\"SLK\",\"DAN\",\"KAT\",\"MON\",\"SRP\",\"SWE\",\"EST\",\"FIN\",\"ELL\",\"KOR\",\"LAT\",\"TUR\",\"RUS\",\"SPA\",\"CES\",\"JPN\",\"FAS\",\"POL\",\"UZB\",\"SQI\",\"MOL\",\"MKD\",\"URD\",\"NEP\",\"SAN\"",
+											"                ];",
+											"            var clientTitleUpdValue  = langArray[Math.floor(Math.random() * langArray.length)];",
+											"            break;",
+											"        case \"paymentTypeUpd\":",
+											"            var paymentTypeArray = [\"CASH\",\"WIRE3DAYS\",\"WIRE7DAYS\",\"WIRE14DAYS\",\"WIRE21DAYS\"];",
+											"            var clientTitleUpdValue  = paymentTypeArray[Math.floor(Math.random() * paymentTypeArray.length)];",
+											"            break;",
+											"        default :",
+											"            var clientTitleUpdValue = data[clientTitles[i]] + \"_updated\";",
+											"    }",
+											"    pm.environment.set(clientTitleUpd, clientTitleUpdValue);",
+											"} "
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"client\": {\r\n  \t\"id\": \"{{id}}\",\r\n\t\"addressLine\": \"{{addressLineUpd}}\",\r\n    \"addressLine2\": \"{{addressLine2Upd}}\",\r\n    \"bankAccount\": \"{{bankAccountUpd}}\",\r\n    \"bankName\": \"{{bankNameUpd}}\",\r\n    \"city\": \"{{cityUpd}}\",\r\n    \"country\": \"{{countryUpd}}\",\r\n    \"currency\": \"{{currencyUpd}}\",\r\n    \"email\": \"{{emailUpd}}\",\r\n    \"email2\": \"{{email2Upd}}\",\r\n    \"fax\": \"{{faxUpd}}\",\r\n    \"legalName\": \"{{legalNameUpd}}\",\r\n    \"name\": \"{{nameUpd}}\",\r\n    \"note\": \"{{noteUpd}}\",\r\n    \"phone\": \"{{phoneUpd}}\",\r\n    \"phone2\": \"{{phone2Upd}}\",\r\n    \"preferredLanguage\": \"{{preferredLanguageUpd}}\",\r\n    \"state\": \"{{stateUpd}}\",\r\n    \"tax\": \"{{taxUpd}}\",\r\n    \"tin\": \"{{tinUpd}}\",\r\n    \"zip\": \"{{zipUpd}}\",\r\n    \"paymentType\": \"{{paymentTypeUpd}}\"\r\n  }\r\n}"
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/rest/v1/clients/{{id}}?token={{token}}",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"rest",
+										"v1",
+										"clients",
+										"{{id}}"
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "{{token}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Successful VERIFY updated client, CVS data file, all fields required",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "b2ac9a54-701e-4aaa-b045-c128769c51ea",
+										"type": "text/javascript",
+										"exec": [
+											"//Парсим Json файл",
+											"var jsonData = pm.response.json();",
+											"",
+											"//Проверяем id клиента coхраненное в переменной с полученным от сервера",
+											"pm.test(\"Verify client id \" + jsonData.client.id, function () ",
+											"{pm.expect(jsonData.client.id).to.eql(pm.environment.get(\"id\"));",
+											"console.log(\"Iteration client id: \" + jsonData.client.id);",
+											"});",
+											"",
+											"// выполняем тест если запрос успешен && корректное id && клиент с астивным статусом (\"deleted\": false)",
+											"if (pm.response.to.have.status(200)&&",
+											"    pm.expect(jsonData.client.id).to.eql(pm.environment.get(\"id\"))&&",
+											"    pm.expect(jsonData.client.deleted).to.eql(false))",
+											"    {",
+											"        ",
+											"     //Проверяем свойства клиента из data файла с полученными от сервера",
+											"                ",
+											"    // проверяемые в цикле свойства клиента",
+											"    var clientTitles = [",
+											"    \"addressLine\",",
+											"    \"addressLine2\",",
+											"    \"bankAccount\",",
+											"    \"bankName\",",
+											"    \"city\",",
+											"    \"country\",",
+											"    \"currency\",",
+											"    \"email\",",
+											"    \"email2\",",
+											"    \"fax\",",
+											"    \"legalName\",",
+											"    \"name\",",
+											"    \"note\",",
+											"    \"paymentType\",",
+											"    \"phone\",",
+											"    \"phone2\",",
+											"    \"preferredLanguage\",",
+											"    \"state\",",
+											"    \"tax\",",
+											"    \"tin\",",
+											"    \"zip\"",
+											"    ];",
+											"    console.log(\"clientTitles length: \" + clientTitles.length);",
+											"    ",
+											"    //Проверяем свойства клиента из data файла с полученными от сервера",
+											"    for (var i=0; i < clientTitles.length; i++) {",
+											"        //выводим на консоль: ",
+											"        // номер итерации цикла",
+											"        console.log(\"iteration# \"+i);",
+											"        //проверяемый параметр",
+											"        console.log(\"client_title: \"+clientTitles[i]);",
+											"                ",
+											"        // Определяем и выводим значения параметра из Json и data файла",
+											"        var clientTitleUpd=clientTitles[i]+\"Upd\";",
+											"        var jsonClientTitleValue = String(jsonData.client[clientTitles[i]]);",
+											"        var dataClientTitleValue = String(pm.environment.get(clientTitleUpd));",
+											"        console.log(\"Json!\" + jsonClientTitleValue + \"!\" + dataClientTitleValue + \"!Data\");",
+											"                ",
+											"        // Тест на проверку соответствия параметра из Json и Data файла",
+											"        pm.test(\"Verify client \"+ clientTitles[i] +\": \" + jsonClientTitleValue, function () {",
+											"        pm.expect(jsonClientTitleValue).to.equal(dataClientTitleValue);",
+											"        });",
+											"    }",
+											"}",
+											"        ",
+											""
+										]
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "3d14173d-11ad-466a-a9de-4cfd9814d659",
+										"type": "text/javascript",
+										"exec": [
+											"",
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"client\": {\r\n    \"addressLine\": \"Brodie Ln\",\r\n    \"addressLine2\": \"Apt 628\",\r\n    \"city\": \"Austin\",\r\n    \"country\": \"USA\",\r\n    \"currency\": \"USD\",\r\n    \"email\": \"string\",\r\n    \"name\": \"New client 4\",\r\n    \"phone\": \"512-975-0001\",\r\n    \"preferredLanguage\": \"ENG\",\r\n    \"state\": \"TX\",\r\n    \"zip\": \"78745\"\r\n  }\r\n}"
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/rest/v1/clients/{{id}}?token={{token}}",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"rest",
+										"v1",
+										"clients",
+										"{{id}}"
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "{{token}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "7b98433a-5bc1-44ee-9788-a1f1221478a6",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "edaa2ecd-3817-43fb-97ef-82dc0508805c",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Successful DELETE client, CVS data file, all fields required",
+					"description": "",
+					"item": [
+						{
+							"name": "Successful CREATE new client, CVS data file, all fields required",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "a85caa10-dfca-49c0-8e13-3159ff1dcbbf",
+										"type": "text/javascript",
+										"exec": [
+											"//Парсим Json файл",
+											"var jsonData = pm.response.json();",
+											"",
+											"//Сохраняем id созданого клиента для передачи этого значения в следующие тесты",
+											"pm.environment.set(\"id\", jsonData.client.id);",
+											"console.log(\"Iteration client id: \" + jsonData.client.id);",
+											"",
+											"// выполняем тест если запрос успешен && корректное id && клиент с астивным статусом (\"deleted\": false)",
+											"if (pm.response.to.have.status(200)&&",
+											"    pm.expect(jsonData.client.id).to.eql(pm.environment.get(\"id\"))&&",
+											"    pm.expect(jsonData.client.deleted).to.eql(false))",
+											"    {",
+											"        ",
+											"     //Проверяем свойства клиента из data файла с полученными от сервера",
+											"                ",
+											"    // проверяемые в цикле свойства клиента",
+											"    var clientTitles = [",
+											"    \"addressLine\",",
+											"    \"addressLine2\",",
+											"    \"bankAccount\",",
+											"    \"bankName\",",
+											"    \"city\",",
+											"    \"country\",",
+											"    \"currency\",",
+											"    \"email\",",
+											"    \"email2\",",
+											"    \"fax\",",
+											"    \"legalName\",",
+											"    \"name\",",
+											"    \"note\",",
+											"    \"paymentType\",",
+											"    \"phone\",",
+											"    \"phone2\",",
+											"    \"preferredLanguage\",",
+											"    \"state\",",
+											"    \"tax\",",
+											"    \"tin\",",
+											"    \"zip\"",
+											"    ];",
+											"    console.log(\"clientTitles length: \" + clientTitles.length);",
+											"                ",
+											"    //Проверяем свойства клиента из data файла с полученными от сервера",
+											"    for (var i=0; i < clientTitles.length; i++) {",
+											"        //выводим на консоль: ",
+											"        // номер итерации цикла",
+											"        console.log(\"iteration# \"+i);",
+											"        //проверяемый параметр",
+											"        console.log(\"client_title: \"+clientTitles[i]);",
+											"                ",
+											"        // Определяем и выводим значения параметра из Json и data файла",
+											"        var jsonClientTitleValue = String(jsonData.client[clientTitles[i]]);",
+											"        var dataClientTitleValue = String(data[clientTitles[i]]);",
+											"        console.log(\"Json!\" + jsonClientTitleValue + \"!\" + dataClientTitleValue + \"!Data\");",
+											"                ",
+											"        // Тест на проверку соответствия параметра из Json и Data файла",
+											"        pm.test(\"Verify client \"+ clientTitles[i] +\": \" + jsonClientTitleValue, function () {",
+											"        pm.expect(jsonClientTitleValue).to.equal(dataClientTitleValue);",
+											"        });",
+											"    }",
+											"}"
+										]
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "15f74bc1-0fe6-483e-b852-d02143ad0d57",
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"client\": {\r\n\t\"addressLine\": \"{{addressLine}}\",\r\n    \"addressLine2\": \"{{addressLine2}}\",\r\n    \"bankAccount\": \"{{bankAccount}}\",\r\n    \"bankName\": \"{{bankName}}\",\r\n    \"city\": \"{{city}}\",\r\n    \"country\": \"{{country}}\",\r\n    \"currency\": \"{{currency}}\",\r\n    \"email\": \"{{email}}\",\r\n    \"email2\": \"{{email2}}\",\r\n    \"fax\": \"{{fax}}\",\r\n    \"legalName\": \"{{legalName}}\",\r\n    \"name\": \"{{name}}\",\r\n    \"note\": \"{{note}}\",\r\n    \"phone\": \"{{phone}}\",\r\n    \"phone2\": \"{{phone2}}\",\r\n    \"preferredLanguage\": \"{{preferredLanguage}}\",\r\n    \"state\": \"{{state}}\",\r\n    \"tax\": \"{{tax}}\",\r\n    \"tin\": \"{{tin}}\",\r\n    \"zip\": \"{{zip}}\",\r\n   \"paymentType\": \"{{paymentType}}\"\r\n  }\r\n}"
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/rest/v1/clients?token={{token}}",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"rest",
+										"v1",
+										"clients"
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "{{token}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Successful Soft Remove client, CVS data file, all fields required",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "21502a30-1073-474a-971f-68412b5d89f9",
+										"type": "text/javascript",
+										"exec": [
+											"//Парсим Json файл",
+											"var jsonData = pm.response.json();",
+											"",
+											"//Проверяем id клиента coхраненное в переменной с полученным от сервера",
+											"pm.test(\"Verify client id \" + jsonData.client.id, function () ",
+											"{pm.expect(jsonData.client.id).to.eql(pm.environment.get(\"id\"));",
+											"console.log(\"Iteration client id: \" + jsonData.client.id);",
+											"});",
+											"",
+											"// выполняем тест если запрос успешен && корректное id && клиент помечен удаленным (\"deleted\": true)",
+											"if (pm.response.to.have.status(200)&&",
+											"    pm.expect(jsonData.client.id).to.eql(pm.environment.get(\"id\"))&&",
+											"    pm.expect(jsonData.client.deleted).to.eql(true))",
+											"    {",
+											"        ",
+											"     //Проверяем свойства клиента из data файла с полученными от сервера",
+											"                ",
+											"    // проверяемые в цикле свойства клиента",
+											"    var clientTitles = [",
+											"    \"addressLine\",",
+											"    \"addressLine2\",",
+											"    \"bankAccount\",",
+											"    \"bankName\",",
+											"    \"city\",",
+											"    \"country\",",
+											"    \"currency\",",
+											"    \"email\",",
+											"    \"email2\",",
+											"    \"fax\",",
+											"    \"legalName\",",
+											"    \"name\",",
+											"    \"note\",",
+											"    \"paymentType\",",
+											"    \"phone\",",
+											"    \"phone2\",",
+											"    \"preferredLanguage\",",
+											"    \"state\",",
+											"    \"tax\",",
+											"    \"tin\",",
+											"    \"zip\"",
+											"    ];",
+											"    console.log(\"clientTitles length: \" + clientTitles.length);",
+											"                ",
+											"    //Проверяем свойства клиента из data файла с полученными от сервера",
+											"    for (var i=0; i < clientTitles.length; i++) {",
+											"        //выводим на консоль: ",
+											"        // номер итерации цикла",
+											"        console.log(\"iteration# \"+i);",
+											"        //проверяемый параметр",
+											"        console.log(\"client_title: \"+clientTitles[i]);",
+											"                ",
+											"        // Определяем и выводим значения параметра из Json и data файла",
+											"        var jsonClientTitleValue = String(jsonData.client[clientTitles[i]]);",
+											"        var dataClientTitleValue = String(data[clientTitles[i]]);",
+											"        console.log(\"Json!\" + jsonClientTitleValue + \"!\" + dataClientTitleValue + \"!Data\");",
+											"                ",
+											"        // Тест на проверку соответствия параметра из Json и Data файла",
+											"        pm.test(\"Verify client \"+ clientTitles[i] +\": \" + jsonClientTitleValue, function () {",
+											"        pm.expect(jsonClientTitleValue).to.equal(dataClientTitleValue);",
+											"        });",
+											"    }",
+											"}"
+										]
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "90c7ce23-333d-4f5a-a466-7b318678eda9",
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"client\": {\r\n  \t\"id\": \"{{id}}\",\r\n    \"deleted\": \"true\",\r\n\t\"addressLine\": \"{{addressLine}}\",\r\n    \"addressLine2\": \"{{addressLine2}}\",\r\n    \"bankAccount\": \"{{bankAccount}}\",\r\n    \"bankName\": \"{{bankName}}\",\r\n    \"city\": \"{{city}}\",\r\n    \"country\": \"{{country}}\",\r\n    \"currency\": \"{{currency}}\",\r\n    \"email\": \"{{email}}\",\r\n    \"email2\": \"{{email2}}\",\r\n    \"fax\": \"{{fax}}\",\r\n    \"legalName\": \"{{legalName}}\",\r\n    \"name\": \"{{name}}\",\r\n    \"note\": \"{{note}}\",\r\n    \"phone\": \"{{phone}}\",\r\n    \"phone2\": \"{{phone2}}\",\r\n    \"preferredLanguage\": \"{{preferredLanguage}}\",\r\n    \"state\": \"{{state}}\",\r\n    \"tax\": \"{{tax}}\",\r\n    \"tin\": \"{{tin}}\",\r\n    \"zip\": \"{{zip}}\",\r\n   \"paymentType\": \"{{paymentType}}\"\r\n  }\r\n}"
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/rest/v1/clients/{{id}}?token={{token}}",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"rest",
+										"v1",
+										"clients",
+										"{{id}}"
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "{{token}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Successful VERIFY removed client, CVS data file, all fields required",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "b9471575-d3ec-434a-bf2a-ab8cfed82392",
+										"type": "text/javascript",
+										"exec": [
+											"//Парсим Json файл",
+											"var jsonData = pm.response.json();",
+											"",
+											"//Проверяем id клиента coхраненное в переменной с полученным от сервера",
+											"pm.test(\"Verify client id \" + jsonData.client.id, function () ",
+											"{pm.expect(jsonData.client.id).to.eql(pm.environment.get(\"id\"));",
+											"console.log(\"Iteration client id: \" + jsonData.client.id);",
+											"});",
+											"",
+											"// выполняем тест если запрос успешен && корректное id && клиент помечен удаленным (\"deleted\": true)",
+											"if (pm.response.to.have.status(200)&&",
+											"    pm.expect(jsonData.client.id).to.eql(pm.environment.get(\"id\"))&&",
+											"    pm.expect(jsonData.client.deleted).to.eql(true))",
+											"    {",
+											"        ",
+											"     //Проверяем свойства клиента из data файла с полученными от сервера",
+											"                ",
+											"    // проверяемые в цикле свойства клиента",
+											"    var clientTitles = [",
+											"    \"addressLine\",",
+											"    \"addressLine2\",",
+											"    \"bankAccount\",",
+											"    \"bankName\",",
+											"    \"city\",",
+											"    \"country\",",
+											"    \"currency\",",
+											"    \"email\",",
+											"    \"email2\",",
+											"    \"fax\",",
+											"    \"legalName\",",
+											"    \"name\",",
+											"    \"note\",",
+											"    \"paymentType\",",
+											"    \"phone\",",
+											"    \"phone2\",",
+											"    \"preferredLanguage\",",
+											"    \"state\",",
+											"    \"tax\",",
+											"    \"tin\",",
+											"    \"zip\"",
+											"    ];",
+											"    console.log(\"clientTitles length: \" + clientTitles.length);",
+											"                ",
+											"    //Проверяем свойства клиента из data файла с полученными от сервера",
+											"    for (var i=0; i < clientTitles.length; i++) {",
+											"        //выводим на консоль: ",
+											"        // номер итерации цикла",
+											"        console.log(\"iteration# \"+i);",
+											"        //проверяемый параметр",
+											"        console.log(\"client_title: \"+clientTitles[i]);",
+											"                ",
+											"        // Определяем и выводим значения параметра из Json и data файла",
+											"        var jsonClientTitleValue = String(jsonData.client[clientTitles[i]]);",
+											"        var dataClientTitleValue = String(data[clientTitles[i]]);",
+											"        console.log(\"Json!\" + jsonClientTitleValue + \"!\" + dataClientTitleValue + \"!Data\");",
+											"                ",
+											"        // Тест на проверку соответствия параметра из Json и Data файла",
+											"        pm.test(\"Verify client \"+ clientTitles[i] +\": \" + jsonClientTitleValue, function () {",
+											"        pm.expect(jsonClientTitleValue).to.equal(dataClientTitleValue);",
+											"        });",
+											"    }",
+											"}"
+										]
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "3d14173d-11ad-466a-a9de-4cfd9814d659",
+										"type": "text/javascript",
+										"exec": [
+											"",
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"client\": {\r\n    \"addressLine\": \"Brodie Ln\",\r\n    \"addressLine2\": \"Apt 628\",\r\n    \"city\": \"Austin\",\r\n    \"country\": \"USA\",\r\n    \"currency\": \"USD\",\r\n    \"email\": \"string\",\r\n    \"name\": \"New client 4\",\r\n    \"phone\": \"512-975-0001\",\r\n    \"preferredLanguage\": \"ENG\",\r\n    \"state\": \"TX\",\r\n    \"zip\": \"78745\"\r\n  }\r\n}"
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/rest/v1/clients/{{id}}?token={{token}}",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"rest",
+										"v1",
+										"clients",
+										"{{id}}"
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "{{token}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "3b340cef-43d2-4a51-88e5-1442376220e5",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "c3e67667-ae07-4ec6-ba92-a7ce30db4789",
+						"type": "text/javascript",
+						"exec": [
+							"//проверка на успешность запроса",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"// Проверка скорость ответа сервера (меньше 1000мс)",
+							"pm.test(\"Response time is less than 1000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"});"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "modul Clients, Generated data, all client fields",
+			"description": "",
+			"item": [
+				{
+					"name": "Successful CREATE new client, Generated data",
+					"description": "",
+					"item": [
+						{
+							"name": "Successful CREATE NEW client, Generated data",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "f6a77b6a-3c09-4940-bd97-489d524cd311",
+										"type": "text/javascript",
+										"exec": [
+											"//Парсим Json файл",
+											"var jsonData = pm.response.json();",
+											"",
+											"//Сохраняем id созданого клиента для передачи этого значения в следующие тесты",
+											"pm.environment.set(\"id\", jsonData.client.id);",
+											"console.log(\"Iteration client id: \" + jsonData.client.id);",
+											"",
+											"// выполняем тест если запрос успешен && корректное id && клиент с астивным статусом (\"deleted\": false)",
+											"if (pm.response.to.have.status(200)&&",
+											"    pm.expect(jsonData.client.id).to.eql(pm.environment.get(\"id\"))&&",
+											"    pm.expect(jsonData.client.deleted).to.eql(false))",
+											"    {",
+											"        ",
+											"     //Проверяем свойства клиента из data файла с полученными от сервера",
+											"                ",
+											"    // проверяемые в цикле свойства клиента",
+											"    var clientTitles = [",
+											"    \"addressLine\",",
+											"    \"addressLine2\",",
+											"    \"bankAccount\",",
+											"    \"bankName\",",
+											"    \"city\",",
+											"    \"country\",",
+											"    \"currency\",",
+											"    \"email\",",
+											"    \"email2\",",
+											"    \"fax\",",
+											"    \"legalName\",",
+											"    \"name\",",
+											"    \"note\",",
+											"    \"paymentType\",",
+											"    \"phone\",",
+											"    \"phone2\",",
+											"    \"preferredLanguage\",",
+											"    \"state\",",
+											"    \"tax\",",
+											"    \"tin\",",
+											"    \"zip\"",
+											"    ];",
+											"    console.log(\"clientTitles length: \" + clientTitles.length);",
+											"                ",
+											"    //Проверяем свойства клиента из data файла с полученными от сервера",
+											"    for (var i=0; i < clientTitles.length; i++) {",
+											"        //выводим на консоль: ",
+											"        // номер итерации цикла",
+											"        console.log(\"iteration# \"+i);",
+											"        //проверяемый параметр",
+											"        console.log(\"client_title: \"+clientTitles[i]);",
+											"                ",
+											"        // Определяем и выводим значения параметра из Json и data файла",
+											"        var jsonClientTitleValue = String(jsonData.client[clientTitles[i]]);",
+											"        var dataClientTitleValue = String(pm.environment.get(clientTitles[i]));",
+											"        console.log(\"Json!\" + jsonClientTitleValue + \"!\" + dataClientTitleValue + \"!Data\");",
+											"                ",
+											"        // Тест на проверку соответствия параметра из Json и Data файла",
+											"        pm.test(\"Verify client \"+ clientTitles[i] +\": \" + jsonClientTitleValue, function () {",
+											"        pm.expect(jsonClientTitleValue).to.equal(dataClientTitleValue);",
+											"        });",
+											"    }",
+											"}"
+										]
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "ccefc7f3-5932-497e-9331-bb4cefa4e684",
+										"type": "text/javascript",
+										"exec": [
+											"var clientTitles = [",
+											"\"addressLine\",",
+											"\"addressLine2\",",
+											"\"bankAccount\",",
+											"\"bankName\",",
+											"\"city\",",
+											"\"country\",",
+											"\"currency\",",
+											"\"email\",",
+											"\"email2\",",
+											"\"fax\",",
+											"\"legalName\",",
+											"\"name\",",
+											"\"note\",",
+											"\"paymentType\",",
+											"\"phone\",",
+											"\"phone2\",",
+											"\"preferredLanguage\",",
+											"\"state\",",
+											"\"tax\",",
+											"\"tin\",",
+											"\"zip\"",
+											"];",
+											"",
+											"for (var i=0; i < clientTitles.length; i++) {",
+											"    var clientTitle = clientTitles[i];",
+											"    var timeStamp = Math.floor(Date.now()/1000);",
+											"    switch (clientTitle) {",
+											"        case \"currency\":",
+											"            var currencyArray= [\"PLN\",\"USD\",\"EUR\",\"RUB\"];",
+											"            var clientTitleValue = currencyArray[Math.floor(Math.random() * currencyArray.length)];",
+											"            break;",
+											"        case \"zip\":",
+											"            var clientTitleValue =  timeStamp;",
+											"            break;",
+											"        case \"tax\":",
+											"            var clientTitleValue =  timeStamp;",
+											"            break;",
+											"        case \"preferredLanguage\":",
+											"            var  langArray = [\"DEU\",\"IND\",\"LIT\",\"HRV\",\"LAV\",\"ARA\",\"UKR\",\"HUN\",\"VIE\",\"SLV\",\"MLT\",\"HIN\",\"AUT\",\"BOS\",\"ISL\",\"ITA\",\"THA\",\"HEB\",\"NOR\",\"RON\",\"POR\",\"AZE\",\"ENG\",\"NLD\",\"GLE\",\"BUL\",\"KAZ\",\"ZHO\",\"HYE\",\"FRA\",\"BEL\",\"SLK\",\"DAN\",\"KAT\",\"MON\",\"SRP\",\"SWE\",\"EST\",\"FIN\",\"ELL\",\"KOR\",\"LAT\",\"TUR\",\"RUS\",\"SPA\",\"CES\",\"JPN\",\"FAS\",\"POL\",\"UZB\",\"SQI\",\"MOL\",\"MKD\",\"URD\",\"NEP\",\"SAN\"",
+											"                ];",
+											"            var clientTitleValue  = langArray[Math.floor(Math.random() * langArray.length)];",
+											"            break;",
+											"        case \"paymentType\":",
+											"            var paymentTypeArray = [\"CASH\",\"WIRE3DAYS\",\"WIRE7DAYS\",\"WIRE14DAYS\",\"WIRE21DAYS\"];",
+											"            var clientTitleValue  = paymentTypeArray[Math.floor(Math.random() * paymentTypeArray.length)];",
+											"            break;",
+											"        default :",
+											"            var clientTitleValue = clientTitle + \"_\" + timeStamp;",
+											"    }",
+											"    pm.environment.set(clientTitle, clientTitleValue);",
+											"} "
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"client\": {\r\n\t\"addressLine\": \"{{addressLine}}\",\r\n    \"addressLine2\": \"{{addressLine2}}\",\r\n    \"bankAccount\": \"{{bankAccount}}\",\r\n    \"bankName\": \"{{bankName}}\",\r\n    \"city\": \"{{city}}\",\r\n    \"country\": \"{{country}}\",\r\n    \"currency\": \"{{currency}}\",\r\n    \"email\": \"{{email}}\",\r\n    \"email2\": \"{{email2}}\",\r\n    \"fax\": \"{{fax}}\",\r\n    \"legalName\": \"{{legalName}}\",\r\n    \"name\": \"{{name}}\",\r\n    \"note\": \"{{note}}\",\r\n    \"phone\": \"{{phone}}\",\r\n    \"phone2\": \"{{phone2}}\",\r\n    \"preferredLanguage\": \"{{preferredLanguage}}\",\r\n    \"state\": \"{{state}}\",\r\n    \"tax\": \"{{tax}}\",\r\n    \"tin\": \"{{tin}}\",\r\n    \"zip\": \"{{zip}}\",\r\n   \"paymentType\": \"{{paymentType}}\"\r\n  }\r\n}"
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/rest/v1/clients?token={{token}}",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"rest",
+										"v1",
+										"clients"
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "{{token}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Successful VERIFY NEW client, Generated data",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "c39526ef-0358-44c9-b803-5ea0b20efbe2",
+										"type": "text/javascript",
+										"exec": [
+											"",
+											"//Парсим Json файл",
+											"var jsonData = pm.response.json();",
+											"",
+											"//Проверяем id клиента coхраненное в переменной с полученным от сервера",
+											"pm.test(\"Verify client id \" + jsonData.client.id, function () ",
+											"{pm.expect(jsonData.client.id).to.eql(pm.environment.get(\"id\"));",
+											"console.log(\"Iteration client id: \" + jsonData.client.id);",
+											"});",
+											"",
+											"// выполняем тест если запрос успешен && корректное id && клиент с астивным статусом (\"deleted\": false)",
+											"if (pm.response.to.have.status(200)&&",
+											"    pm.expect(jsonData.client.id).to.eql(pm.environment.get(\"id\"))&&",
+											"    pm.expect(jsonData.client.deleted).to.eql(false))",
+											"    {",
+											"        ",
+											"     //Проверяем свойства клиента из data файла с полученными от сервера",
+											"                ",
+											"    // проверяемые в цикле свойства клиента",
+											"    var clientTitles = [",
+											"    \"addressLine\",",
+											"    \"addressLine2\",",
+											"    \"bankAccount\",",
+											"    \"bankName\",",
+											"    \"city\",",
+											"    \"country\",",
+											"    \"currency\",",
+											"    \"email\",",
+											"    \"email2\",",
+											"    \"fax\",",
+											"    \"legalName\",",
+											"    \"name\",",
+											"    \"note\",",
+											"    \"paymentType\",",
+											"    \"phone\",",
+											"    \"phone2\",",
+											"    \"preferredLanguage\",",
+											"    \"state\",",
+											"    \"tax\",",
+											"    \"tin\",",
+											"    \"zip\"",
+											"    ];",
+											"    console.log(\"clientTitles length: \" + clientTitles.length);",
+											"                ",
+											"    //Проверяем свойства клиента из data файла с полученными от сервера",
+											"    for (var i=0; i < clientTitles.length; i++) {",
+											"        //выводим на консоль: ",
+											"        // номер итерации цикла",
+											"        console.log(\"iteration# \"+i);",
+											"        //проверяемый параметр",
+											"        console.log(\"client_title: \"+clientTitles[i]);",
+											"                ",
+											"        // Определяем и выводим значения параметра из Json и data файла",
+											"        var jsonClientTitleValue = String(jsonData.client[clientTitles[i]]);",
+											"        var dataClientTitleValue = String(pm.environment.get(clientTitles[i]));",
+											"        console.log(\"Json!\" + jsonClientTitleValue + \"!\" + dataClientTitleValue + \"!Data\");",
+											"                ",
+											"        // Тест на проверку соответствия параметра из Json и Data файла",
+											"        pm.test(\"Verify client \"+ clientTitles[i] +\": \" + jsonClientTitleValue, function () {",
+											"        pm.expect(jsonClientTitleValue).to.equal(dataClientTitleValue);",
+											"        });",
+											"        pm.environment.unset(clientTitles[i]);",
+											"    }",
+											"}"
+										]
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "3d14173d-11ad-466a-a9de-4cfd9814d659",
+										"type": "text/javascript",
+										"exec": [
+											"",
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"client\": {\r\n    \"addressLine\": \"Brodie Ln\",\r\n    \"addressLine2\": \"Apt 628\",\r\n    \"city\": \"Austin\",\r\n    \"country\": \"USA\",\r\n    \"currency\": \"USD\",\r\n    \"email\": \"string\",\r\n    \"name\": \"New client 4\",\r\n    \"phone\": \"512-975-0001\",\r\n    \"preferredLanguage\": \"ENG\",\r\n    \"state\": \"TX\",\r\n    \"zip\": \"78745\"\r\n  }\r\n}"
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/rest/v1/clients/{{id}}?token={{token}}",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"rest",
+										"v1",
+										"clients",
+										"{{id}}"
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "{{token}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "6473e142-f3e3-4332-9136-db5b0eb8e669",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "0ee0a5ed-2f4d-4464-a705-ad553201d271",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Successful Update client, Generated data",
+					"description": "",
+					"item": [
+						{
+							"name": "Successful CREATE NEW client, Generated data",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "f6a77b6a-3c09-4940-bd97-489d524cd311",
+										"type": "text/javascript",
+										"exec": [
+											"//Парсим Json файл",
+											"var jsonData = pm.response.json();",
+											"",
+											"//Сохраняем id созданого клиента для передачи этого значения в следующие тесты",
+											"pm.environment.set(\"id\", jsonData.client.id);",
+											"console.log(\"Iteration client id: \" + jsonData.client.id);",
+											"",
+											"// выполняем тест если запрос успешен && корректное id && клиент с астивным статусом (\"deleted\": false)",
+											"if (pm.response.to.have.status(200)&&",
+											"    pm.expect(jsonData.client.id).to.eql(pm.environment.get(\"id\"))&&",
+											"    pm.expect(jsonData.client.deleted).to.eql(false))",
+											"    {",
+											"        ",
+											"     //Проверяем свойства клиента из data файла с полученными от сервера",
+											"                ",
+											"    // проверяемые в цикле свойства клиента",
+											"    var clientTitles = [",
+											"    \"addressLine\",",
+											"    \"addressLine2\",",
+											"    \"bankAccount\",",
+											"    \"bankName\",",
+											"    \"city\",",
+											"    \"country\",",
+											"    \"currency\",",
+											"    \"email\",",
+											"    \"email2\",",
+											"    \"fax\",",
+											"    \"legalName\",",
+											"    \"name\",",
+											"    \"note\",",
+											"    \"paymentType\",",
+											"    \"phone\",",
+											"    \"phone2\",",
+											"    \"preferredLanguage\",",
+											"    \"state\",",
+											"    \"tax\",",
+											"    \"tin\",",
+											"    \"zip\"",
+											"    ];",
+											"    console.log(\"clientTitles length: \" + clientTitles.length);",
+											"                ",
+											"    //Проверяем свойства клиента из data файла с полученными от сервера",
+											"    for (var i=0; i < clientTitles.length; i++) {",
+											"        //выводим на консоль: ",
+											"        // номер итерации цикла",
+											"        console.log(\"iteration# \"+i);",
+											"        //проверяемый параметр",
+											"        console.log(\"client_title: \"+clientTitles[i]);",
+											"                ",
+											"        // Определяем и выводим значения параметра из Json и data файла",
+											"        var jsonClientTitleValue = String(jsonData.client[clientTitles[i]]);",
+											"        var dataClientTitleValue = String(pm.environment.get(clientTitles[i]));",
+											"        console.log(\"Json!\" + jsonClientTitleValue + \"!\" + dataClientTitleValue + \"!Data\");",
+											"                ",
+											"        // Тест на проверку соответствия параметра из Json и Data файла",
+											"        pm.test(\"Verify client \"+ clientTitles[i] +\": \" + jsonClientTitleValue, function () {",
+											"        pm.expect(jsonClientTitleValue).to.equal(dataClientTitleValue);",
+											"        });",
+											"    }",
+											"}"
+										]
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "30bfe7b0-fd6f-4977-843a-413631aaf757",
+										"type": "text/javascript",
+										"exec": [
+											"var clientTitles = [",
+											"\"addressLine\",",
+											"\"addressLine2\",",
+											"\"bankAccount\",",
+											"\"bankName\",",
+											"\"city\",",
+											"\"country\",",
+											"\"currency\",",
+											"\"email\",",
+											"\"email2\",",
+											"\"fax\",",
+											"\"legalName\",",
+											"\"name\",",
+											"\"note\",",
+											"\"paymentType\",",
+											"\"phone\",",
+											"\"phone2\",",
+											"\"preferredLanguage\",",
+											"\"state\",",
+											"\"tax\",",
+											"\"tin\",",
+											"\"zip\"",
+											"];",
+											"",
+											"for (var i=0; i < clientTitles.length; i++) {",
+											"    var clientTitle = clientTitles[i];",
+											"    var timeStamp = Math.floor(Date.now()/1000);",
+											"    switch (clientTitle) {",
+											"        case \"currency\":",
+											"            var currencyArray= [\"PLN\",\"USD\",\"EUR\",\"RUB\"];",
+											"            var clientTitleValue = currencyArray[Math.floor(Math.random() * currencyArray.length)];",
+											"            break;",
+											"        case \"zip\":",
+											"            var clientTitleValue =  timeStamp;",
+											"            break;",
+											"        case \"tax\":",
+											"            var clientTitleValue =  timeStamp;",
+											"            break;",
+											"        case \"preferredLanguage\":",
+											"            var  langArray = [\"DEU\",\"IND\",\"LIT\",\"HRV\",\"LAV\",\"ARA\",\"UKR\",\"HUN\",\"VIE\",\"SLV\",\"MLT\",\"HIN\",\"AUT\",\"BOS\",\"ISL\",\"ITA\",\"THA\",\"HEB\",\"NOR\",\"RON\",\"POR\",\"AZE\",\"ENG\",\"NLD\",\"GLE\",\"BUL\",\"KAZ\",\"ZHO\",\"HYE\",\"FRA\",\"BEL\",\"SLK\",\"DAN\",\"KAT\",\"MON\",\"SRP\",\"SWE\",\"EST\",\"FIN\",\"ELL\",\"KOR\",\"LAT\",\"TUR\",\"RUS\",\"SPA\",\"CES\",\"JPN\",\"FAS\",\"POL\",\"UZB\",\"SQI\",\"MOL\",\"MKD\",\"URD\",\"NEP\",\"SAN\"",
+											"                ];",
+											"            var clientTitleValue  = langArray[Math.floor(Math.random() * langArray.length)];",
+											"            break;",
+											"        case \"paymentType\":",
+											"            var paymentTypeArray = [\"CASH\",\"WIRE3DAYS\",\"WIRE7DAYS\",\"WIRE14DAYS\",\"WIRE21DAYS\"];",
+											"            var clientTitleValue  = paymentTypeArray[Math.floor(Math.random() * paymentTypeArray.length)];",
+											"            break;",
+											"        default :",
+											"            var clientTitleValue = clientTitle + \"_\" + timeStamp;",
+											"    }",
+											"    pm.environment.set(clientTitle, clientTitleValue);",
+											"} "
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"client\": {\r\n\t\"addressLine\": \"{{addressLine}}\",\r\n    \"addressLine2\": \"{{addressLine2}}\",\r\n    \"bankAccount\": \"{{bankAccount}}\",\r\n    \"bankName\": \"{{bankName}}\",\r\n    \"city\": \"{{city}}\",\r\n    \"country\": \"{{country}}\",\r\n    \"currency\": \"{{currency}}\",\r\n    \"email\": \"{{email}}\",\r\n    \"email2\": \"{{email2}}\",\r\n    \"fax\": \"{{fax}}\",\r\n    \"legalName\": \"{{legalName}}\",\r\n    \"name\": \"{{name}}\",\r\n    \"note\": \"{{note}}\",\r\n    \"phone\": \"{{phone}}\",\r\n    \"phone2\": \"{{phone2}}\",\r\n    \"preferredLanguage\": \"{{preferredLanguage}}\",\r\n    \"state\": \"{{state}}\",\r\n    \"tax\": \"{{tax}}\",\r\n    \"tin\": \"{{tin}}\",\r\n    \"zip\": \"{{zip}}\",\r\n   \"paymentType\": \"{{paymentType}}\"\r\n  }\r\n}"
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/rest/v1/clients?token={{token}}",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"rest",
+										"v1",
+										"clients"
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "{{token}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PUT UPDATE NEW client Data file",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "57cd1f27-ab8e-41f3-9dfb-ff0bca0a5a47",
+										"type": "text/javascript",
+										"exec": [
+											"//Парсим Json файл",
+											"var jsonData = pm.response.json();",
+											"",
+											"//Проверяем id клиента coхраненное в переменной с полученным от сервера",
+											"pm.test(\"Verify client id \" + jsonData.client.id, function () ",
+											"{pm.expect(jsonData.client.id).to.eql(pm.environment.get(\"id\"));",
+											"console.log(\"Iteration client id: \" + jsonData.client.id);",
+											"});",
+											"",
+											"// выполняем тест если запрос успешен && корректное id && клиент с астивным статусом (\"deleted\": false)",
+											"if (pm.response.to.have.status(200)&&",
+											"    pm.expect(jsonData.client.id).to.eql(pm.environment.get(\"id\"))&&",
+											"    pm.expect(jsonData.client.deleted).to.eql(false))",
+											"    {",
+											"        ",
+											"     //Проверяем свойства клиента из data файла с полученными от сервера",
+											"                ",
+											"    // проверяемые в цикле свойства клиента",
+											"    var clientTitles = [",
+											"    \"addressLine\",",
+											"    \"addressLine2\",",
+											"    \"bankAccount\",",
+											"    \"bankName\",",
+											"    \"city\",",
+											"    \"country\",",
+											"    \"currency\",",
+											"    \"email\",",
+											"    \"email2\",",
+											"    \"fax\",",
+											"    \"legalName\",",
+											"    \"name\",",
+											"    \"note\",",
+											"    \"paymentType\",",
+											"    \"phone\",",
+											"    \"phone2\",",
+											"    \"preferredLanguage\",",
+											"    \"state\",",
+											"    \"tax\",",
+											"    \"tin\",",
+											"    \"zip\"",
+											"    ];",
+											"    console.log(\"clientTitles length: \" + clientTitles.length);",
+											"    ",
+											"    //Проверяем свойства клиента из data файла с полученными от сервера",
+											"    for (var i=0; i < clientTitles.length; i++) {",
+											"        //выводим на консоль: ",
+											"        // номер итерации цикла",
+											"        console.log(\"iteration# \"+i);",
+											"        //проверяемый параметр",
+											"        console.log(\"client_title: \"+clientTitles[i]);",
+											"                ",
+											"        // Определяем и выводим значения параметра из Json и data файла",
+											"        var clientTitleUpd=clientTitles[i]+\"Upd\";",
+											"        var jsonClientTitleValue = String(jsonData.client[clientTitles[i]]);",
+											"        var dataClientTitleValue = String(pm.environment.get(clientTitleUpd));",
+											"        console.log(\"Json!\" + jsonClientTitleValue + \"!\" + dataClientTitleValue + \"!Data\");",
+											"                ",
+											"        // Тест на проверку соответствия параметра из Json и Data файла",
+											"        pm.test(\"Verify client \"+ clientTitles[i] +\": \" + jsonClientTitleValue, function () {",
+											"        pm.expect(jsonClientTitleValue).to.equal(dataClientTitleValue);",
+											"        });",
+											"    }",
+											"}"
+										]
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "adfa5388-e3ab-48cf-b93f-cdfec75fe0ee",
+										"type": "text/javascript",
+										"exec": [
+											"var clientTitles = [",
+											"\"addressLine\",",
+											"\"addressLine2\",",
+											"\"bankAccount\",",
+											"\"bankName\",",
+											"\"city\",",
+											"\"country\",",
+											"\"currency\",",
+											"\"email\",",
+											"\"email2\",",
+											"\"fax\",",
+											"\"legalName\",",
+											"\"name\",",
+											"\"note\",",
+											"\"paymentType\",",
+											"\"phone\",",
+											"\"phone2\",",
+											"\"preferredLanguage\",",
+											"\"state\",",
+											"\"tax\",",
+											"\"tin\",",
+											"\"zip\"",
+											"];",
+											"",
+											"for (var i=0; i < clientTitles.length; i++) {",
+											"    var clientTitleUpd = clientTitles[i]+\"Upd\";",
+											"    var timeStamp = Math.floor(Date.now());",
+											"    switch (clientTitleUpd) {",
+											"        case \"currencyUpd\":",
+											"            var currencyArray= [\"PLN\",\"USD\",\"EUR\",\"RUB\"];",
+											"            var clientTitleUpdValue = currencyArray[Math.floor(Math.random() * currencyArray.length)];",
+											"            break;",
+											"        case \"zipUpd\":",
+											"            var clientTitleUpdValue =  timeStamp;",
+											"            break;",
+											"        case \"taxUpd\":",
+											"            var clientTitleUpdValue =  timeStamp;",
+											"            break;",
+											"        case \"preferredLanguageUpd\":",
+											"            var  langArray = [\"DEU\",\"IND\",\"LIT\",\"HRV\",\"LAV\",\"ARA\",\"UKR\",\"HUN\",\"VIE\",\"SLV\",\"MLT\",\"HIN\",\"AUT\",\"BOS\",\"ISL\",\"ITA\",\"THA\",\"HEB\",\"NOR\",\"RON\",\"POR\",\"AZE\",\"ENG\",\"NLD\",\"GLE\",\"BUL\",\"KAZ\",\"ZHO\",\"HYE\",\"FRA\",\"BEL\",\"SLK\",\"DAN\",\"KAT\",\"MON\",\"SRP\",\"SWE\",\"EST\",\"FIN\",\"ELL\",\"KOR\",\"LAT\",\"TUR\",\"RUS\",\"SPA\",\"CES\",\"JPN\",\"FAS\",\"POL\",\"UZB\",\"SQI\",\"MOL\",\"MKD\",\"URD\",\"NEP\",\"SAN\"",
+											"                ];",
+											"            var clientTitleUpdValue  = langArray[Math.floor(Math.random() * langArray.length)];",
+											"            break;",
+											"        case \"paymentTypeUpd\":",
+											"            var paymentTypeArray = [\"CASH\",\"WIRE3DAYS\",\"WIRE7DAYS\",\"WIRE14DAYS\",\"WIRE21DAYS\"];",
+											"            var clientTitleUpdValue  = paymentTypeArray[Math.floor(Math.random() * paymentTypeArray.length)];",
+											"            break;",
+											"        default :",
+											"            var clientTitleUpdValue = clientTitleUpd + \"_\" + timeStamp;",
+											"    }",
+											"    pm.environment.set(clientTitleUpd, clientTitleUpdValue);",
+											"} "
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"client\": {\r\n  \t\"id\": \"{{id}}\",\r\n\t\"addressLine\": \"{{addressLineUpd}}\",\r\n    \"addressLine2\": \"{{addressLine2Upd}}\",\r\n    \"bankAccount\": \"{{bankAccountUpd}}\",\r\n    \"bankName\": \"{{bankNameUpd}}\",\r\n    \"city\": \"{{cityUpd}}\",\r\n    \"country\": \"{{countryUpd}}\",\r\n    \"currency\": \"{{currencyUpd}}\",\r\n    \"email\": \"{{emailUpd}}\",\r\n    \"email2\": \"{{email2Upd}}\",\r\n    \"fax\": \"{{faxUpd}}\",\r\n    \"legalName\": \"{{legalNameUpd}}\",\r\n    \"name\": \"{{nameUpd}}\",\r\n    \"note\": \"{{noteUpd}}\",\r\n    \"phone\": \"{{phoneUpd}}\",\r\n    \"phone2\": \"{{phone2Upd}}\",\r\n    \"preferredLanguage\": \"{{preferredLanguageUpd}}\",\r\n    \"state\": \"{{stateUpd}}\",\r\n    \"tax\": \"{{taxUpd}}\",\r\n    \"tin\": \"{{tinUpd}}\",\r\n    \"zip\": \"{{zipUpd}}\",\r\n    \"paymentType\": \"{{paymentTypeUpd}}\"\r\n  }\r\n}"
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/rest/v1/clients/{{id}}?token={{token}}",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"rest",
+										"v1",
+										"clients",
+										"{{id}}"
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "{{token}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Successful VERIFY NEW client, Generated data",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "1aa389a4-b7b8-483d-8782-29ef39fb7598",
+										"type": "text/javascript",
+										"exec": [
+											"",
+											"//Парсим Json файл",
+											"var jsonData = pm.response.json();",
+											"",
+											"//Проверяем id клиента coхраненное в переменной с полученным от сервера",
+											"pm.test(\"Verify client id \" + jsonData.client.id, function () ",
+											"{pm.expect(jsonData.client.id).to.eql(pm.environment.get(\"id\"));",
+											"console.log(\"Iteration client id: \" + jsonData.client.id);",
+											"});",
+											"",
+											"// выполняем тест если запрос успешен && корректное id && клиент с астивным статусом (\"deleted\": false)",
+											"if (pm.response.to.have.status(200)&&",
+											"    pm.expect(jsonData.client.id).to.eql(pm.environment.get(\"id\"))&&",
+											"    pm.expect(jsonData.client.deleted).to.eql(false))",
+											"    {",
+											"        ",
+											"     //Проверяем свойства клиента из data файла с полученными от сервера",
+											"                ",
+											"    // проверяемые в цикле свойства клиента",
+											"    var clientTitles = [",
+											"    \"addressLine\",",
+											"    \"addressLine2\",",
+											"    \"bankAccount\",",
+											"    \"bankName\",",
+											"    \"city\",",
+											"    \"country\",",
+											"    \"currency\",",
+											"    \"email\",",
+											"    \"email2\",",
+											"    \"fax\",",
+											"    \"legalName\",",
+											"    \"name\",",
+											"    \"note\",",
+											"    \"paymentType\",",
+											"    \"phone\",",
+											"    \"phone2\",",
+											"    \"preferredLanguage\",",
+											"    \"state\",",
+											"    \"tax\",",
+											"    \"tin\",",
+											"    \"zip\"",
+											"    ];",
+											"    console.log(\"clientTitles length: \" + clientTitles.length);",
+											"                ",
+											"    //Проверяем свойства клиента из data файла с полученными от сервера",
+											"    for (var i=0; i < clientTitles.length; i++) {",
+											"        //выводим на консоль: ",
+											"        // номер итерации цикла",
+											"        console.log(\"iteration# \"+i);",
+											"        //проверяемый параметр",
+											"        console.log(\"client_title: \"+clientTitles[i]);",
+											"                ",
+											"        // Определяем и выводим значения параметра из Json и data файла",
+											"        var clientTitleUpd=clientTitles[i]+\"Upd\";",
+											"        var clientTitle=clientTitles[i];",
+											"        var jsonClientTitleValue = String(jsonData.client[clientTitle]);",
+											"        var dataClientTitleValue = String(pm.environment.get(clientTitleUpd));",
+											"        console.log(\"Json!\" + jsonClientTitleValue + \"!\" + dataClientTitleValue + \"!Data\");",
+											"                ",
+											"        // Тест на проверку соответствия параметра из Json и Data файла",
+											"        pm.test(\"Verify client \"+ clientTitle +\": \" + jsonClientTitleValue, function () {",
+											"        pm.expect(jsonClientTitleValue).to.equal(dataClientTitleValue);",
+											"        });",
+											"        pm.environment.unset(clientTitleUpd);",
+											"        pm.environment.unset(clientTitle);",
+											"    }",
+											"}"
+										]
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "3d14173d-11ad-466a-a9de-4cfd9814d659",
+										"type": "text/javascript",
+										"exec": [
+											"",
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"client\": {\r\n    \"addressLine\": \"Brodie Ln\",\r\n    \"addressLine2\": \"Apt 628\",\r\n    \"city\": \"Austin\",\r\n    \"country\": \"USA\",\r\n    \"currency\": \"USD\",\r\n    \"email\": \"string\",\r\n    \"name\": \"New client 4\",\r\n    \"phone\": \"512-975-0001\",\r\n    \"preferredLanguage\": \"ENG\",\r\n    \"state\": \"TX\",\r\n    \"zip\": \"78745\"\r\n  }\r\n}"
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/rest/v1/clients/{{id}}?token={{token}}",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"rest",
+										"v1",
+										"clients",
+										"{{id}}"
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "{{token}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "6473e142-f3e3-4332-9136-db5b0eb8e669",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "0ee0a5ed-2f4d-4464-a705-ad553201d271",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Successful DELETE client, Generated data",
+					"description": "",
+					"item": [
+						{
+							"name": "Successful CREATE NEW client, Generated data",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "f6a77b6a-3c09-4940-bd97-489d524cd311",
+										"type": "text/javascript",
+										"exec": [
+											"//Парсим Json файл",
+											"var jsonData = pm.response.json();",
+											"",
+											"//Сохраняем id созданого клиента для передачи этого значения в следующие тесты",
+											"pm.environment.set(\"id\", jsonData.client.id);",
+											"console.log(\"Iteration client id: \" + jsonData.client.id);",
+											"",
+											"// выполняем тест если запрос успешен && корректное id && клиент с астивным статусом (\"deleted\": false)",
+											"if (pm.response.to.have.status(200)&&",
+											"    pm.expect(jsonData.client.id).to.eql(pm.environment.get(\"id\"))&&",
+											"    pm.expect(jsonData.client.deleted).to.eql(false))",
+											"    {",
+											"        ",
+											"     //Проверяем свойства клиента из data файла с полученными от сервера",
+											"                ",
+											"    // проверяемые в цикле свойства клиента",
+											"    var clientTitles = [",
+											"    \"addressLine\",",
+											"    \"addressLine2\",",
+											"    \"bankAccount\",",
+											"    \"bankName\",",
+											"    \"city\",",
+											"    \"country\",",
+											"    \"currency\",",
+											"    \"email\",",
+											"    \"email2\",",
+											"    \"fax\",",
+											"    \"legalName\",",
+											"    \"name\",",
+											"    \"note\",",
+											"    \"paymentType\",",
+											"    \"phone\",",
+											"    \"phone2\",",
+											"    \"preferredLanguage\",",
+											"    \"state\",",
+											"    \"tax\",",
+											"    \"tin\",",
+											"    \"zip\"",
+											"    ];",
+											"    console.log(\"clientTitles length: \" + clientTitles.length);",
+											"                ",
+											"    //Проверяем свойства клиента из data файла с полученными от сервера",
+											"    for (var i=0; i < clientTitles.length; i++) {",
+											"        //выводим на консоль: ",
+											"        // номер итерации цикла",
+											"        console.log(\"iteration# \"+i);",
+											"        //проверяемый параметр",
+											"        console.log(\"client_title: \"+clientTitles[i]);",
+											"                ",
+											"        // Определяем и выводим значения параметра из Json и data файла",
+											"        var jsonClientTitleValue = String(jsonData.client[clientTitles[i]]);",
+											"        var dataClientTitleValue = String(pm.environment.get(clientTitles[i]));",
+											"        console.log(\"Json!\" + jsonClientTitleValue + \"!\" + dataClientTitleValue + \"!Data\");",
+											"                ",
+											"        // Тест на проверку соответствия параметра из Json и Data файла",
+											"        pm.test(\"Verify client \"+ clientTitles[i] +\": \" + jsonClientTitleValue, function () {",
+											"        pm.expect(jsonClientTitleValue).to.equal(dataClientTitleValue);",
+											"        });",
+											"    }",
+											"}"
+										]
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "1e29e5bd-16e6-442a-96ed-fd41d66e114b",
+										"type": "text/javascript",
+										"exec": [
+											"var clientTitles = [",
+											"\"addressLine\",",
+											"\"addressLine2\",",
+											"\"bankAccount\",",
+											"\"bankName\",",
+											"\"city\",",
+											"\"country\",",
+											"\"currency\",",
+											"\"email\",",
+											"\"email2\",",
+											"\"fax\",",
+											"\"legalName\",",
+											"\"name\",",
+											"\"note\",",
+											"\"paymentType\",",
+											"\"phone\",",
+											"\"phone2\",",
+											"\"preferredLanguage\",",
+											"\"state\",",
+											"\"tax\",",
+											"\"tin\",",
+											"\"zip\"",
+											"];",
+											"",
+											"for (var i=0; i < clientTitles.length; i++) {",
+											"    var clientTitle = clientTitles[i];",
+											"    var timeStamp = Math.floor(Date.now());",
+											"    switch (clientTitle) {",
+											"        case \"currency\":",
+											"            var currencyArray= [\"PLN\",\"USD\",\"EUR\",\"RUB\"];",
+											"            var clientTitleValue = currencyArray[Math.floor(Math.random() * currencyArray.length)];",
+											"            break;",
+											"        case \"zip\":",
+											"            var clientTitleValue =  timeStamp;",
+											"            break;",
+											"        case \"tax\":",
+											"            var clientTitleValue =  timeStamp;",
+											"            break;",
+											"        case \"preferredLanguage\":",
+											"            var  langArray = [\"DEU\",\"IND\",\"LIT\",\"HRV\",\"LAV\",\"ARA\",\"UKR\",\"HUN\",\"VIE\",\"SLV\",\"MLT\",\"HIN\",\"AUT\",\"BOS\",\"ISL\",\"ITA\",\"THA\",\"HEB\",\"NOR\",\"RON\",\"POR\",\"AZE\",\"ENG\",\"NLD\",\"GLE\",\"BUL\",\"KAZ\",\"ZHO\",\"HYE\",\"FRA\",\"BEL\",\"SLK\",\"DAN\",\"KAT\",\"MON\",\"SRP\",\"SWE\",\"EST\",\"FIN\",\"ELL\",\"KOR\",\"LAT\",\"TUR\",\"RUS\",\"SPA\",\"CES\",\"JPN\",\"FAS\",\"POL\",\"UZB\",\"SQI\",\"MOL\",\"MKD\",\"URD\",\"NEP\",\"SAN\"",
+											"                ];",
+											"            var clientTitleValue  = langArray[Math.floor(Math.random() * langArray.length)];",
+											"            break;",
+											"        case \"paymentType\":",
+											"            var paymentTypeArray = [\"CASH\",\"WIRE3DAYS\",\"WIRE7DAYS\",\"WIRE14DAYS\",\"WIRE21DAYS\"];",
+											"            var clientTitleValue  = paymentTypeArray[Math.floor(Math.random() * paymentTypeArray.length)];",
+											"            break;",
+											"        default :",
+											"            var clientTitleValue = clientTitle + \"_\" + timeStamp;",
+											"    }",
+											"    pm.environment.set(clientTitle, clientTitleValue);",
+											"} "
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"client\": {\r\n\t\"addressLine\": \"{{addressLine}}\",\r\n    \"addressLine2\": \"{{addressLine2}}\",\r\n    \"bankAccount\": \"{{bankAccount}}\",\r\n    \"bankName\": \"{{bankName}}\",\r\n    \"city\": \"{{city}}\",\r\n    \"country\": \"{{country}}\",\r\n    \"currency\": \"{{currency}}\",\r\n    \"email\": \"{{email}}\",\r\n    \"email2\": \"{{email2}}\",\r\n    \"fax\": \"{{fax}}\",\r\n    \"legalName\": \"{{legalName}}\",\r\n    \"name\": \"{{name}}\",\r\n    \"note\": \"{{note}}\",\r\n    \"phone\": \"{{phone}}\",\r\n    \"phone2\": \"{{phone2}}\",\r\n    \"preferredLanguage\": \"{{preferredLanguage}}\",\r\n    \"state\": \"{{state}}\",\r\n    \"tax\": \"{{tax}}\",\r\n    \"tin\": \"{{tin}}\",\r\n    \"zip\": \"{{zip}}\",\r\n   \"paymentType\": \"{{paymentType}}\"\r\n  }\r\n}"
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/rest/v1/clients?token={{token}}",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"rest",
+										"v1",
+										"clients"
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "{{token}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Successful Soft Remove client, Generated data",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "83f0f729-196a-4290-aa7f-83746a84307d",
+										"type": "text/javascript",
+										"exec": [
+											"//Парсим Json файл",
+											"var jsonData = pm.response.json();",
+											"",
+											"//Проверяем id клиента coхраненное в переменной с полученным от сервера",
+											"pm.test(\"Verify client id \" + jsonData.client.id, function () ",
+											"{pm.expect(jsonData.client.id).to.eql(pm.environment.get(\"id\"));",
+											"console.log(\"Iteration client id: \" + jsonData.client.id);",
+											"});",
+											"",
+											"// выполняем тест если запрос успешен && корректное id && клиент помечен удаленным (\"deleted\": true)",
+											"if (pm.response.to.have.status(200)&&",
+											"    pm.expect(jsonData.client.id).to.eql(pm.environment.get(\"id\"))&&",
+											"    pm.expect(jsonData.client.deleted).to.eql(true))",
+											"    {",
+											"        ",
+											"     //Проверяем свойства клиента из data файла с полученными от сервера",
+											"                ",
+											"    // проверяемые в цикле свойства клиента",
+											"    var clientTitles = [",
+											"    \"addressLine\",",
+											"    \"addressLine2\",",
+											"    \"bankAccount\",",
+											"    \"bankName\",",
+											"    \"city\",",
+											"    \"country\",",
+											"    \"currency\",",
+											"    \"email\",",
+											"    \"email2\",",
+											"    \"fax\",",
+											"    \"legalName\",",
+											"    \"name\",",
+											"    \"note\",",
+											"    \"paymentType\",",
+											"    \"phone\",",
+											"    \"phone2\",",
+											"    \"preferredLanguage\",",
+											"    \"state\",",
+											"    \"tax\",",
+											"    \"tin\",",
+											"    \"zip\"",
+											"    ];",
+											"    console.log(\"clientTitles length: \" + clientTitles.length);",
+											"                ",
+											"    //Проверяем свойства клиента из data файла с полученными от сервера",
+											"    for (var i=0; i < clientTitles.length; i++) {",
+											"        //выводим на консоль: ",
+											"        // номер итерации цикла",
+											"        console.log(\"iteration# \"+i);",
+											"        //проверяемый параметр",
+											"        console.log(\"client_title: \"+clientTitles[i]);",
+											"                ",
+											"        // Определяем и выводим значения параметра из Json и data файла",
+											"        var jsonClientTitleValue = String(jsonData.client[clientTitles[i]]);",
+											"        var dataClientTitleValue = String(pm.environment.get(clientTitles[i]));",
+											"        console.log(\"Json!\" + jsonClientTitleValue + \"!\" + dataClientTitleValue + \"!Data\");",
+											"                ",
+											"        // Тест на проверку соответствия параметра из Json и Data файла",
+											"        pm.test(\"Verify client \"+ clientTitles[i] +\": \" + jsonClientTitleValue, function () {",
+											"        pm.expect(jsonClientTitleValue).to.equal(dataClientTitleValue);",
+											"        });",
+											"    }",
+											"}"
+										]
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "4e29b003-0639-4e67-9bc0-0be1e0976601",
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"client\": {\r\n  \t\"id\": \"{{id}}\",\r\n    \"deleted\": \"true\",\r\n\t\"addressLine\": \"{{addressLine}}\",\r\n    \"addressLine2\": \"{{addressLine2}}\",\r\n    \"bankAccount\": \"{{bankAccount}}\",\r\n    \"bankName\": \"{{bankName}}\",\r\n    \"city\": \"{{city}}\",\r\n    \"country\": \"{{country}}\",\r\n    \"currency\": \"{{currency}}\",\r\n    \"email\": \"{{email}}\",\r\n    \"email2\": \"{{email2}}\",\r\n    \"fax\": \"{{fax}}\",\r\n    \"legalName\": \"{{legalName}}\",\r\n    \"name\": \"{{name}}\",\r\n    \"note\": \"{{note}}\",\r\n    \"phone\": \"{{phone}}\",\r\n    \"phone2\": \"{{phone2}}\",\r\n    \"preferredLanguage\": \"{{preferredLanguage}}\",\r\n    \"state\": \"{{state}}\",\r\n    \"tax\": \"{{tax}}\",\r\n    \"tin\": \"{{tin}}\",\r\n    \"zip\": \"{{zip}}\",\r\n   \"paymentType\": \"{{paymentType}}\"\r\n  }\r\n}"
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/rest/v1/clients/{{id}}?token={{token}}",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"rest",
+										"v1",
+										"clients",
+										"{{id}}"
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "{{token}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Successful VERIFY NEW client, Generated data",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "eeef6f46-dd8b-4207-9d4e-f6ebd7efc18d",
+										"type": "text/javascript",
+										"exec": [
+											"",
+											"//Парсим Json файл",
+											"var jsonData = pm.response.json();",
+											"",
+											"//Проверяем id клиента coхраненное в переменной с полученным от сервера",
+											"pm.test(\"Verify client id \" + jsonData.client.id, function () ",
+											"{pm.expect(jsonData.client.id).to.eql(pm.environment.get(\"id\"));",
+											"console.log(\"Iteration client id: \" + jsonData.client.id);",
+											"});",
+											"",
+											"// выполняем тест если запрос успешен && корректное id && клиент помечен удаленным (\"deleted\": true)",
+											"if (pm.response.to.have.status(200)&&",
+											"    pm.expect(jsonData.client.id).to.eql(pm.environment.get(\"id\"))&&",
+											"    pm.expect(jsonData.client.deleted).to.eql(true))",
+											"    {",
+											"        ",
+											"     //Проверяем свойства клиента из data файла с полученными от сервера",
+											"                ",
+											"    // проверяемые в цикле свойства клиента",
+											"    var clientTitles = [",
+											"    \"addressLine\",",
+											"    \"addressLine2\",",
+											"    \"bankAccount\",",
+											"    \"bankName\",",
+											"    \"city\",",
+											"    \"country\",",
+											"    \"currency\",",
+											"    \"email\",",
+											"    \"email2\",",
+											"    \"fax\",",
+											"    \"legalName\",",
+											"    \"name\",",
+											"    \"note\",",
+											"    \"paymentType\",",
+											"    \"phone\",",
+											"    \"phone2\",",
+											"    \"preferredLanguage\",",
+											"    \"state\",",
+											"    \"tax\",",
+											"    \"tin\",",
+											"    \"zip\"",
+											"    ];",
+											"    console.log(\"clientTitles length: \" + clientTitles.length);",
+											"                ",
+											"    //Проверяем свойства клиента из data файла с полученными от сервера",
+											"    for (var i=0; i < clientTitles.length; i++) {",
+											"        //выводим на консоль: ",
+											"        // номер итерации цикла",
+											"        console.log(\"iteration# \"+i);",
+											"        //проверяемый параметр",
+											"        console.log(\"client_title: \"+clientTitles[i]);",
+											"                ",
+											"        // Определяем и выводим значения параметра из Json и data файла",
+											"        var jsonClientTitleValue = String(jsonData.client[clientTitles[i]]);",
+											"        var dataClientTitleValue = String(pm.environment.get(clientTitles[i]));",
+											"        console.log(\"Json!\" + jsonClientTitleValue + \"!\" + dataClientTitleValue + \"!Data\");",
+											"                ",
+											"        // Тест на проверку соответствия параметра из Json и Data файла",
+											"        pm.test(\"Verify client \"+ clientTitles[i] +\": \" + jsonClientTitleValue, function () {",
+											"        pm.expect(jsonClientTitleValue).to.equal(dataClientTitleValue);",
+											"        });",
+											"        ",
+											"        pm.environment.unset(clientTitles[i]);",
+											"    }",
+											"}"
+										]
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "3d14173d-11ad-466a-a9de-4cfd9814d659",
+										"type": "text/javascript",
+										"exec": [
+											"",
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"client\": {\r\n    \"addressLine\": \"Brodie Ln\",\r\n    \"addressLine2\": \"Apt 628\",\r\n    \"city\": \"Austin\",\r\n    \"country\": \"USA\",\r\n    \"currency\": \"USD\",\r\n    \"email\": \"string\",\r\n    \"name\": \"New client 4\",\r\n    \"phone\": \"512-975-0001\",\r\n    \"preferredLanguage\": \"ENG\",\r\n    \"state\": \"TX\",\r\n    \"zip\": \"78745\"\r\n  }\r\n}"
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/rest/v1/clients/{{id}}?token={{token}}",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"rest",
+										"v1",
+										"clients",
+										"{{id}}"
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "{{token}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "6473e142-f3e3-4332-9136-db5b0eb8e669",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "0ee0a5ed-2f4d-4464-a705-ad553201d271",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"_postman_isSubFolder": true
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "484db267-3de4-4cd1-b628-9041748a3932",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "80ab51e9-64b4-4fae-8afd-2ed9fd8ed0e0",
+						"type": "text/javascript",
+						"exec": [
+							"//проверка на успешность запроса",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"// Проверка скорость ответа сервера (меньше 500мс)",
+							"pm.test(\"Response time is less than 1000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"});"
+						]
+					}
 				}
 			]
 		}
